@@ -1,0 +1,21 @@
+- model_class = Addition
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.titleize
+
+%p
+  %strong= model_class.human_attribute_name(:name) + ':'
+  %br
+  = @addition.name
+%p
+  %strong= model_class.human_attribute_name(:amount) + ':'
+  %br
+  = @addition.amount
+%p
+  %strong= model_class.human_attribute_name(:state_id) + ':'
+  %br
+  = @addition.state_id
+
+
+= link_to t('.back', :default => t("helpers.links.back")), additions_path, :class => 'btn btn-default'
+= link_to t('.edit', :default => t("helpers.links.edit")), edit_addition_path(@addition), :class => 'btn btn-default'
+= link_to t('.destroy', :default => t("helpers.links.destroy")), addition_path(@addition), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
