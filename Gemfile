@@ -39,6 +39,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'pry-byebug'
   gem 'sqlite3'
+  gem 'seed_dump'
 end
 
 # Use ActiveModel has_secure_password
