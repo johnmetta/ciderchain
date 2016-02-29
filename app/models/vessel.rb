@@ -15,4 +15,8 @@ class Vessel < ActiveRecord::Base
   def type_name
     vessel_type.name
   end
+
+  def current_status
+    statuses.last
+  end
 end

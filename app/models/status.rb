@@ -4,6 +4,7 @@ class Status < ActiveRecord::Base
   belongs_to :unit
   belongs_to :vessel
   belongs_to :batch
+  belongs_to :closed_by, class_name: Status.name
 
   validates :state, presence: true
   validates :volume, presence: true
@@ -12,6 +13,7 @@ class Status < ActiveRecord::Base
   validates :batch, presence: true
 
   before_create :default_volume
+  after_commit  :close_previous_status
 
   scope :by_state, -> (state) { where(state_id: state.id) }
   scope :open, -> { where(closed: nil) }
@@ -20,8 +22,10 @@ class Status < ActiveRecord::Base
     volume * unit.factor
   end
 
-  def close
+  def close(status)
+    raise ArgumentError unless status.is_a?(Status)
     self.closed = Date.today
+    self.closed_by = status
     self.save
   end
 
@@ -30,5 +34,17 @@ class Status < ActiveRecord::Base
   def default_volume
     volume = volume.presence || batch.volume
     unit = unit.presence || batch.unit
+  end
+
+  def check_unique_status
+    if batch.statuses.open.reject{|s| s.id == id}.any? && !closed
+      errors.add(:closed, 'Cannot have more than one open status per batch')
+    end
+  end
+
+  def close_previous_status
+    unless self.closed
+      batch.statuses.open.reject{|s| s.id == id}.map{|s| s.close self }
+    end
   end
 end

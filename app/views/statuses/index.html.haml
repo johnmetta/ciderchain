@@ -6,21 +6,23 @@
     %tr
       %th= model_class.human_attribute_name(:id)
       %th= model_class.human_attribute_name(:volume)
-      %th= model_class.human_attribute_name(:batch_id)
-      %th= model_class.human_attribute_name(:unit_id)
-      %th= model_class.human_attribute_name(:vessel_id)
-      %th= model_class.human_attribute_name(:state_id)
+      %th= model_class.human_attribute_name(:batch)
+      %th= model_class.human_attribute_name(:vessel)
+      %th= model_class.human_attribute_name(:state)
       %th= model_class.human_attribute_name(:created_at)
       %th=t '.actions', :default => t("helpers.actions")
   %tbody
     - @statuses.each do |status|
       %tr
         %td= link_to status.id, status_path(status)
-        %td= status.volume
-        %td= status.batch_id
-        %td= status.unit_id
-        %td= status.vessel_id
-        %td= status.state_id
+        %td
+          = status.volume
+          = status.unit.short_name
+        %td= status.batch.name
+        %td= status.vessel.code
+        %td
+          = status.state.name
+          = "(closed: #{status.closed_by_id || ''})" if status.closed
         %td=l status.created_at
         %td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_status_path(status), :class => 'btn btn-default btn-xs'

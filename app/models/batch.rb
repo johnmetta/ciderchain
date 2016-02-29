@@ -9,6 +9,7 @@ class Batch < ActiveRecord::Base
   validates :code, presence: true
   validates :volume, presence: true
   validates :unit, presence: true
+  validate :unique_status
 
   def self.default_code(designator='C')
     [Time.now.year, designator.to_s.upcase, next_batch_number].join
@@ -29,6 +30,14 @@ class Batch < ActiveRecord::Base
 
   def current_status
     statuses.last
+  end
+
+  private
+
+  def unique_status
+    if statuses.open.many?
+      errors.add(:status, 'can only have one open status')
+    end
   end
 
 end
