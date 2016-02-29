@@ -1,8 +1,17 @@
 class State < ActiveRecord::Base
 
-  belongs_to  :batch
-  belongs_to  :vessel
-  has_many    :additions
-  has_many    :measurements
+  has_many    :statuses
+
+  def self.front_page
+    State.all.first(6)
+  end
+
+  def total_volume
+    statuses.open.map(&:base_volume).sum
+  end
+
+  def batches
+    statuses.open.map(&:batch)
+  end
 
 end

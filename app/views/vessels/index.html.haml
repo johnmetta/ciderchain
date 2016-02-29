@@ -5,18 +5,20 @@
   %thead
     %tr
       %th= model_class.human_attribute_name(:id)
-      %th= model_class.human_attribute_name(:type)
+      %th= model_class.human_attribute_name(:vessel_type)
       %th= model_class.human_attribute_name(:code)
       %th= model_class.human_attribute_name(:volume)
+      %th= model_class.human_attribute_name(:unit_id)
       %th= model_class.human_attribute_name(:created_at)
       %th=t '.actions', :default => t("helpers.actions")
   %tbody
     - @vessels.each do |vessel|
       %tr
         %td= link_to vessel.id, vessel_path(vessel)
-        %td= vessel.type
+        %td= vessel.vessel_type.name
         %td= vessel.code
         %td= vessel.volume
+        %td= vessel.unit.name
         %td=l vessel.created_at
         %td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_vessel_path(vessel), :class => 'btn btn-default btn-xs'

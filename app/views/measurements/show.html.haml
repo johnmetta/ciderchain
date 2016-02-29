@@ -11,9 +11,13 @@
   %br
   = @measurement.value
 %p
-  %strong= model_class.human_attribute_name(:state_id) + ':'
+  %strong= model_class.human_attribute_name(:status_id) + ':'
   %br
   = @measurement.state_id
+%p
+  %strong= model_class.human_attribute_name(:unit_id) + ':'
+  %br
+  = @measurement.unit_id
 
 
 = link_to t('.back', :default => t("helpers.links.back")), measurements_path, :class => 'btn btn-default'

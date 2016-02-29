@@ -3,17 +3,15 @@
   %h1=t '.title', :default => model_class.model_name.human.titleize
 
 %p
-  %strong= model_class.human_attribute_name(:type) + ':'
-  %br
-  = @vessel.type
+  %strong= model_class.human_attribute_name(:vessel_type) + ':'
+  = @vessel.type_name.humanize
 %p
   %strong= model_class.human_attribute_name(:code) + ':'
-  %br
   = @vessel.code
 %p
   %strong= model_class.human_attribute_name(:volume) + ':'
-  %br
   = @vessel.volume
+  = @vessel.unit.name.pluralize
 
 
 = link_to t('.back', :default => t("helpers.links.back")), vessels_path, :class => 'btn btn-default'

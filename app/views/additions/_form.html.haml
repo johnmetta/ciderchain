@@ -5,15 +5,20 @@
       = f.text_field :name, class: 'form-control', required: true
     = f.error_span(:name)
   .form-group
-    = f.label :amount, class: 'control-label col-lg-2'
+    = f.label :value, class: 'control-label col-lg-2'
     .col-lg-10
-      = f.text_field :amount, class: 'form-control', required: true
-    = f.error_span(:amount)
+      = f.text_field :value, class: 'form-control', required: true
+    = f.error_span(:value)
   .form-group
-    = f.label :state_id, class: 'control-label col-lg-2'
+    = f.label :status_id, class: 'control-label col-lg-2'
     .col-lg-10
-      = f.text_field :state_id, class: 'form-control', required: true
-    = f.error_span(:state_id)
+      = f.text_field :status_id, class: 'form-control', required: true
+    = f.error_span(:status_id)
+  .form-group
+    = f.label :unit_id, class: 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :unit_id, class: 'form-control', required: true
+    = f.error_span(:unit_id)
   .form-group
     .col-lg-offset-2.col-lg-10
       = f.submit nil,class: 'btn btn-primary'

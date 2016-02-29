@@ -7,13 +7,17 @@
   %br
   = @addition.name
 %p
-  %strong= model_class.human_attribute_name(:amount) + ':'
+  %strong= model_class.human_attribute_name(:value) + ':'
   %br
-  = @addition.amount
+  = @addition.value
 %p
-  %strong= model_class.human_attribute_name(:state_id) + ':'
+  %strong= model_class.human_attribute_name(:status_id) + ':'
   %br
-  = @addition.state_id
+  = @addition.status_id
+%p
+  %strong= model_class.human_attribute_name(:unit_id) + ':'
+  %br
+  = @addition.unit_id
 
 
 = link_to t('.back', :default => t("helpers.links.back")), additions_path, :class => 'btn btn-default'

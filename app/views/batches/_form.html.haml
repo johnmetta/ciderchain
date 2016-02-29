@@ -2,7 +2,7 @@
   .form-group
     = f.label :code, class: 'control-label col-lg-2'
     .col-lg-10
-      = f.text_field :code, class: 'form-control', required: true
+      = f.text_field :code, class: 'form-control', required: true, value: Batch.default_code
     = f.error_span(:code)
   .form-group
     = f.label :volume, class: 'control-label col-lg-2'
@@ -12,8 +12,12 @@
   .form-group
     = f.label :name, class: 'control-label col-lg-2'
     .col-lg-10
-      = f.text_field :name, class: 'form-control', required: true
+      = f.text_field :name, class: 'form-control'
     = f.error_span(:name)
+  .form-group
+    = f.label :unit_id, class: 'control-label col-lg-2', id: 'dropdownMenu1'
+    .col-lg-10
+      = render partial: 'units/dropdown', locals: { f: f, name: :unit_id, required: true, selected: @batch.unit_id }
   .form-group
     .col-lg-offset-2.col-lg-10
       = f.submit nil,class: 'btn btn-primary'

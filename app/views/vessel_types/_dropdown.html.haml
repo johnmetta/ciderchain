@@ -1,0 +1,5 @@
+.dropdown
+
+  -options = options_from_collection_for_select(VesselType.all, 'id', 'name', selected)
+  = f.select :vessel_type_id,  options, {class: 'form-control', required: required}
+  = f.error_span(:vessel_type_id)

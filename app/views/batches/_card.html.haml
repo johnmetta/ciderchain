@@ -1,0 +1,17 @@
+%a{ href: batch_url(batch) }
+  %button{class: "btn btn-primary", type: "button"}
+    - if batch.name.present?
+      %bold=batch.name.humanize
+      %br
+    = batch.code
+    = batch.created_at.strftime('%m/%d')
+    %br
+    = batch.days_in
+    days
+    %br
+    = batch.current_status.vessel.type_name
+    = batch.current_status.vessel.code
+    %br
+    %span.badge
+      = batch.current_status.volume
+      = batch.current_status.unit.name.pluralize

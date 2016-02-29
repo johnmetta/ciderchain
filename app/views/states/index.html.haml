@@ -1,27 +1,16 @@
 - model_class = State
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
-%table.table.table-striped
-  %thead
-    %tr
-      %th= model_class.human_attribute_name(:id)
-      %th= model_class.human_attribute_name(:name)
-      %th= model_class.human_attribute_name(:volume)
-      %th= model_class.human_attribute_name(:batch_id)
-      %th= model_class.human_attribute_name(:vessel_id)
-      %th= model_class.human_attribute_name(:created_at)
-      %th=t '.actions', :default => t("helpers.actions")
-  %tbody
-    - @states.each do |state|
-      %tr
-        %td= link_to state.id, state_path(state)
-        %td= state.name
-        %td= state.volume
-        %td= state.batch_id
-        %td= state.vessel_id
-        %td=l state.created_at
-        %td
-          = link_to t('.edit', :default => t("helpers.links.edit")), edit_state_path(state), :class => 'btn btn-default btn-xs'
-          = link_to t('.destroy', :default => t("helpers.links.destroy")), state_path(state), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+  %h1='Production Snapshot'
 
-= link_to t('.new', :default => t("helpers.links.new")), new_state_path, :class => 'btn btn-primary'
+.top
+  -State.front_page.each do |state|
+    .col-md-2
+      %h3
+        = state.name.humanize
+        %br
+        %small
+          = state.total_volume.round(1)
+          = Unit.liter.short_name
+          = "(#{(state.total_volume * (1/Unit.gallon.factor)).round(1)} #{Unit.gallon.short_name})"
+      - state.batches.each do |batch|
+        = render partial: 'batches/card', locals: { batch: batch }

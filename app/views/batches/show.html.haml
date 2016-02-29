@@ -4,17 +4,14 @@
 
 %p
   %strong= model_class.human_attribute_name(:code) + ':'
-  %br
   = @batch.code
 %p
-  %strong= model_class.human_attribute_name(:volume) + ':'
-  %br
-  = @batch.volume
-%p
   %strong= model_class.human_attribute_name(:name) + ':'
-  %br
-  = @batch.name
-
+  = @batch.name.presence || 'Unnamed'
+%p
+  %strong= model_class.human_attribute_name(:volume) + ':'
+  = @batch.volume
+  = link_to @batch.unit.name.pluralize, unit_url(@batch.unit)
 
 = link_to t('.back', :default => t("helpers.links.back")), batches_path, :class => 'btn btn-default'
 = link_to t('.edit', :default => t("helpers.links.edit")), edit_batch_path(@batch), :class => 'btn btn-default'

@@ -8,6 +8,7 @@
       %th= model_class.human_attribute_name(:code)
       %th= model_class.human_attribute_name(:volume)
       %th= model_class.human_attribute_name(:name)
+      %th= model_class.human_attribute_name(:unit_id)
       %th= model_class.human_attribute_name(:created_at)
       %th=t '.actions', :default => t("helpers.actions")
   %tbody
@@ -17,6 +18,7 @@
         %td= batch.code
         %td= batch.volume
         %td= batch.name
+        %td= batch.unit_id
         %td=l batch.created_at
         %td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_batch_path(batch), :class => 'btn btn-default btn-xs'
