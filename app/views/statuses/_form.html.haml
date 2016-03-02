@@ -7,20 +7,20 @@
   .form-group
     = f.label :batch, class: 'control-label col-lg-2'
     .col-lg-10
-      = render partial: 'batches/dropdown', locals: { f: f, required: true  }
+      = render partial: 'batches/dropdown', locals: { f: f, required: true, selected: @status.try(:batch_id)  }
   .form-group
     = f.label :unit_id, class: 'control-label col-lg-2'
     .col-lg-10
-      = render partial: 'units/dropdown', locals: { f: f, name: :unit_id, required: true, selected: @status.unit_id  }
+      = render partial: 'units/dropdown', locals: { f: f, name: :unit_id, required: true, selected: @status.try(:unit_id)  }
     = f.error_span(:unit_id)
   .form-group
     = f.label :vessel, class: 'control-label col-lg-2'
     .col-lg-10
-      = render partial: 'vessels/dropdown', locals: { f: f, name: :unit_id, required: true  }
+      = render partial: 'vessels/dropdown', locals: { f: f, required: true, selected: @status.try(:vessel_id)  }
   .form-group
     = f.label :state_id, class: 'control-label col-lg-2'
     .col-lg-10
-      = render partial: 'states/dropdown', locals: { f: f, name: :unit_id, required: true  }
+      = render partial: 'states/dropdown', locals: { f: f, required: true, selected: @status.try(:state_id)  }
   .form-group
     .col-lg-offset-2.col-lg-10
       = f.submit nil,class: 'btn btn-primary'

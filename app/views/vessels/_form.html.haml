@@ -2,7 +2,7 @@
   .form-group
     = f.label :vessel_type, class: 'control-label col-lg-2'
     .col-lg-10
-      = render partial: 'vessel_types/dropdown', locals: { f: f, name: :unit_id, required: true, selected: @vessel.vessel_type_id }
+      = render partial: 'vessel_types/dropdown', locals: { f: f, name: :unit_id, required: true, selected: @vessel.try(:vessel_type_id) }
     = f.error_span(:vessel_type)
   .form-group
     = f.label :code, class: 'control-label col-lg-2'
@@ -17,7 +17,7 @@
   .form-group
     = f.label :unit_id, class: 'control-label col-lg-2'
     .col-lg-10
-      = render partial: 'units/dropdown', locals: { f: f, name: :unit_id, required: true, selected: @vessel.unit_id }
+      = render partial: 'units/dropdown', locals: { f: f, name: :unit_id, required: true, selected: @vessel.try(:unit_id) }
   .form-group
     .col-lg-offset-2.col-lg-10
       = f.submit nil,class: 'btn btn-primary'

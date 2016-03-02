@@ -25,11 +25,11 @@ class BatchesController < ApplicationController
   # POST /batches.json
   def create
     @batch = Batch.new(batch_params)
-
+    @batch.unit = Unit.liter unless batch_params[:unit_id]
     respond_to do |format|
       if @batch.save
         format.html { redirect_to @batch, notice: 'Batch was successfully created.' }
-        format.json { render :show, status: :created, location: @batch }
+        format.json { render json: @batch }
       else
         format.html { render :new }
         format.json { render json: @batch.errors, status: :unprocessable_entity }
@@ -61,6 +61,12 @@ class BatchesController < ApplicationController
     end
   end
 
+  def default_batch_info
+    respond_to :json do
+      { code: Batch.default_code, date: Date.today }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_batch
@@ -69,6 +75,6 @@ class BatchesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def batch_params
-      params.require(:batch).permit(:name, :volume, :code, :unit_id)
+      params.require(:batch).permit(:created_at, :name, :volume, :code, :unit_id)
     end
 end

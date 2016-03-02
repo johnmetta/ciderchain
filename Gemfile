@@ -34,6 +34,8 @@ gem "twitter-bootstrap-rails"
 gem 'haml', '~> 4.0.5'
 gem 'haml-rails'
 gem "sorcery"
+gem 'react-rails'
+
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'

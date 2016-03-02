@@ -1,6 +1,6 @@
 class State < ActiveRecord::Base
 
-  has_many    :statuses
+  has_many :statuses
 
   def self.front_page
     State.all.first(6)

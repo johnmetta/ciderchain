@@ -11,15 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229080307) do
+ActiveRecord::Schema.define(version: 20160229165850) do
 
   create_table "additions", force: :cascade do |t|
     t.string   "name"
     t.float    "value"
-    t.integer  "state_id"
+    t.integer  "status_id"
     t.integer  "unit_id"
+    t.integer  "batch_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text     "notes"
   end
 
   create_table "batches", force: :cascade do |t|
@@ -34,7 +36,7 @@ ActiveRecord::Schema.define(version: 20160229080307) do
   create_table "measurements", force: :cascade do |t|
     t.string   "name"
     t.float    "value"
-    t.integer  "state_id"
+    t.integer  "status_id"
     t.integer  "unit_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

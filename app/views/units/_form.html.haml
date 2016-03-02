@@ -17,7 +17,7 @@
   .form-group
     = f.label :base_id, class: 'control-label col-lg-2'
     .col-lg-10
-      = render partial: 'units/dropdown', locals: { f: f, name: :base_id, required: false, selected: @unit.unit_id }
+      = render partial: 'units/dropdown', locals: { f: f, name: :base_id, required: false, selected: @unit.try(:unit_id) }
   .form-group
     .col-lg-offset-2.col-lg-10
       = f.submit nil,class: 'btn btn-primary'

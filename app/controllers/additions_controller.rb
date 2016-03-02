@@ -15,6 +15,7 @@ class AdditionsController < ApplicationController
   # GET /additions/new
   def new
     @addition = Addition.new
+    @statuses = []
   end
 
   # GET /additions/1/edit
@@ -25,6 +26,7 @@ class AdditionsController < ApplicationController
   # POST /additions.json
   def create
     @addition = Addition.new(addition_params)
+    @addition.status = @addition.batch.current_status
 
     respond_to do |format|
       if @addition.save
@@ -62,13 +64,14 @@ class AdditionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_addition
-      @addition = Addition.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_addition
+    @addition = Addition.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def addition_params
-      params.fetch(:addition, {})
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def addition_params
+    params.require(:addition).permit(:name, :value, :unit_id, :batch_id, :notes, :status_id)
+  end
+
 end

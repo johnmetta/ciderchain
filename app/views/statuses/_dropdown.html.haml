@@ -1,0 +1,5 @@
+.dropdown
+
+  -options = options_from_collection_for_select(@statuses, 'id', 'name', selected: selected)
+  = f.select :status_id,  options, {class: 'form-control', required: required}
+  = f.error_span(:status_id)

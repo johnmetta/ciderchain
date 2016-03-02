@@ -3,8 +3,9 @@ class InitialMigration < ActiveRecord::Migration
     create_table "additions", force: :cascade do |t|
       t.string   "name"
       t.float    "value"
-      t.integer  "state_id"
+      t.integer  "status_id"
       t.integer  "unit_id"
+      t.integer  "batch_id"
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
     end
@@ -21,7 +22,7 @@ class InitialMigration < ActiveRecord::Migration
     create_table "measurements", force: :cascade do |t|
       t.string   "name"
       t.float    "value"
-      t.integer  "state_id"
+      t.integer  "status_id"
       t.integer  "unit_id"
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false

@@ -5,6 +5,7 @@ class Status < ActiveRecord::Base
   belongs_to :vessel
   belongs_to :batch
   belongs_to :closed_by, class_name: Status.name
+  has_many  :measurements, dependent: :destroy
 
   validates :state, presence: true
   validates :volume, presence: true
@@ -22,11 +23,15 @@ class Status < ActiveRecord::Base
     volume * unit.factor
   end
 
-  def close(status)
+  def close!(status)
     raise ArgumentError unless status.is_a?(Status)
     self.closed = Date.today
     self.closed_by = status
     self.save
+  end
+
+  def display_name
+    "#{state.name} #{closed? ? '(closed)' : ''}"
   end
 
   private
@@ -44,7 +49,7 @@ class Status < ActiveRecord::Base
 
   def close_previous_status
     unless self.closed
-      batch.statuses.open.reject{|s| s.id == id}.map{|s| s.close self }
+      batch.statuses.open.reject{|s| s.id == id}.map{|s| s.close! self }
     end
   end
 end

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'home/index'
+
   resources :sessions
   get 'login' => 'sessions#new', as: :login
   match 'logout' => 'sessions#destroy', as: :logout, via: :all
@@ -13,5 +15,5 @@ Rails.application.routes.draw do
   resources :statuses
   resources :users
 
-  root to: 'states#index'
+  root to: 'home#index'
 end
