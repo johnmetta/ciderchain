@@ -4,7 +4,7 @@ class StatePresenter < SimpleDelegator
   def as_json
     {
       name: name.humanize,
-      total_volume: total_volume.round(1),
+      total_volume: total_volume.round,
       units: Unit.liter.short_name,
       gallons: (total_volume * (1/Unit.gallon.factor)).round(1),
       batches: BatchPresenter.collection(batches).as_json

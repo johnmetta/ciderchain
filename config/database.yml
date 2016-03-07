@@ -19,7 +19,7 @@ sqlite: &sqlite
   database: db/development.sqlite3
 
 development:
-  <<: *sqlite
+  <<: *development
 
 test:
   adapter: postgresql

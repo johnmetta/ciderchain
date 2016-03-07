@@ -11,23 +11,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229165850) do
+ActiveRecord::Schema.define(version: 20160213182023) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "additions", force: :cascade do |t|
-    t.string   "name"
-    t.float    "value"
-    t.integer  "status_id"
+    t.float    "amount"
+    t.integer  "racking_id"
     t.integer  "unit_id"
-    t.integer  "batch_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.text     "notes"
+    t.integer  "additive_id"
+  end
+
+  create_table "additive_sources", force: :cascade do |t|
+    t.integer  "source_id"
+    t.integer  "additive_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "additives", force: :cascade do |t|
+    t.string   "name"
+    t.text     "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text     "notes"
+  end
+
+  create_table "batch_sources", force: :cascade do |t|
+    t.integer  "batch_id"
+    t.integer  "source_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "batches", force: :cascade do |t|
     t.string   "code"
     t.integer  "volume"
     t.string   "name"
+    t.string   "notes"
     t.integer  "unit_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -36,10 +60,22 @@ ActiveRecord::Schema.define(version: 20160229165850) do
   create_table "measurements", force: :cascade do |t|
     t.string   "name"
     t.float    "value"
-    t.integer  "status_id"
+    t.integer  "racking_id"
     t.integer  "unit_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "rackings", force: :cascade do |t|
+    t.integer  "volume"
+    t.integer  "batch_id"
+    t.integer  "unit_id"
+    t.integer  "vessel_id"
+    t.integer  "state_id"
+    t.datetime "closed"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "closed_by_id"
   end
 
   create_table "sources", force: :cascade do |t|
@@ -53,18 +89,6 @@ ActiveRecord::Schema.define(version: 20160229165850) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "statuses", force: :cascade do |t|
-    t.integer  "volume"
-    t.integer  "batch_id"
-    t.integer  "unit_id"
-    t.integer  "vessel_id"
-    t.integer  "state_id"
-    t.datetime "closed"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.integer  "closed_by_id"
   end
 
   create_table "units", force: :cascade do |t|
@@ -90,9 +114,9 @@ ActiveRecord::Schema.define(version: 20160229165850) do
     t.datetime "reset_password_email_sent_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["remember_me_token"], name: "index_users_on_remember_me_token"
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["remember_me_token"], name: "index_users_on_remember_me_token", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", using: :btree
 
   create_table "vessel_types", force: :cascade do |t|
     t.string   "name"

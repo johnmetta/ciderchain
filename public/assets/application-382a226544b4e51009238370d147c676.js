@@ -8951,8 +8951,8 @@ jQuery.extend({
 			// Deferreds
 			deferred = jQuery.Deferred(),
 			completeDeferred = jQuery.Callbacks("once memory"),
-			// Status-dependent callbacks
-			statusCode = s.statusCode || {},
+			// Racking-dependent callbacks
+			rackingCode = s.rackingCode || {},
 			// Headers (they are sent all at once)
 			requestHeaders = {},
 			requestHeadersNames = {},
@@ -9002,26 +9002,26 @@ jQuery.extend({
 					return this;
 				},
 
-				// Status-dependent callbacks
-				statusCode: function( map ) {
+				// Racking-dependent callbacks
+				rackingCode: function( map ) {
 					var code;
 					if ( map ) {
 						if ( state < 2 ) {
 							for ( code in map ) {
 								// Lazy-add the new callback in a way that preserves old ones
-								statusCode[ code ] = [ statusCode[ code ], map[ code ] ];
+								rackingCode[ code ] = [ rackingCode[ code ], map[ code ] ];
 							}
 						} else {
 							// Execute the appropriate callbacks
-							jqXHR.always( map[ jqXHR.status ] );
+							jqXHR.always( map[ jqXHR.racking ] );
 						}
 					}
 					return this;
 				},
 
 				// Cancel the request
-				abort: function( statusText ) {
-					var finalText = statusText || strAbort;
+				abort: function( rackingText ) {
+					var finalText = rackingText || strAbort;
 					if ( transport ) {
 						transport.abort( finalText );
 					}
@@ -9187,9 +9187,9 @@ jQuery.extend({
 		}
 
 		// Callback for when everything is done
-		function done( status, nativeStatusText, responses, headers ) {
+		function done( racking, nativeRackingText, responses, headers ) {
 			var isSuccess, success, error, response, modified,
-				statusText = nativeStatusText;
+				rackingText = nativeRackingText;
 
 			// Called once
 			if ( state === 2 ) {
@@ -9212,10 +9212,10 @@ jQuery.extend({
 			responseHeadersString = headers || "";
 
 			// Set readyState
-			jqXHR.readyState = status > 0 ? 4 : 0;
+			jqXHR.readyState = racking > 0 ? 4 : 0;
 
 			// Determine if successful
-			isSuccess = status >= 200 && status < 300 || status === 304;
+			isSuccess = racking >= 200 && racking < 300 || racking === 304;
 
 			// Get response data
 			if ( responses ) {
@@ -9241,46 +9241,46 @@ jQuery.extend({
 				}
 
 				// if no content
-				if ( status === 204 || s.type === "HEAD" ) {
-					statusText = "nocontent";
+				if ( racking === 204 || s.type === "HEAD" ) {
+					rackingText = "nocontent";
 
 				// if not modified
-				} else if ( status === 304 ) {
-					statusText = "notmodified";
+				} else if ( racking === 304 ) {
+					rackingText = "notmodified";
 
 				// If we have data, let's convert it
 				} else {
-					statusText = response.state;
+					rackingText = response.state;
 					success = response.data;
 					error = response.error;
 					isSuccess = !error;
 				}
 			} else {
-				// We extract error from statusText
-				// then normalize statusText and status for non-aborts
-				error = statusText;
-				if ( status || !statusText ) {
-					statusText = "error";
-					if ( status < 0 ) {
-						status = 0;
+				// We extract error from rackingText
+				// then normalize rackingText and racking for non-aborts
+				error = rackingText;
+				if ( racking || !rackingText ) {
+					rackingText = "error";
+					if ( racking < 0 ) {
+						racking = 0;
 					}
 				}
 			}
 
 			// Set data for the fake xhr object
-			jqXHR.status = status;
-			jqXHR.statusText = ( nativeStatusText || statusText ) + "";
+			jqXHR.racking = racking;
+			jqXHR.rackingText = ( nativeRackingText || rackingText ) + "";
 
 			// Success/Error
 			if ( isSuccess ) {
-				deferred.resolveWith( callbackContext, [ success, statusText, jqXHR ] );
+				deferred.resolveWith( callbackContext, [ success, rackingText, jqXHR ] );
 			} else {
-				deferred.rejectWith( callbackContext, [ jqXHR, statusText, error ] );
+				deferred.rejectWith( callbackContext, [ jqXHR, rackingText, error ] );
 			}
 
-			// Status-dependent callbacks
-			jqXHR.statusCode( statusCode );
-			statusCode = undefined;
+			// Racking-dependent callbacks
+			jqXHR.rackingCode( rackingCode );
+			rackingCode = undefined;
 
 			if ( fireGlobals ) {
 				globalEventContext.trigger( isSuccess ? "ajaxSuccess" : "ajaxError",
@@ -9288,7 +9288,7 @@ jQuery.extend({
 			}
 
 			// Complete
-			completeDeferred.fireWith( callbackContext, [ jqXHR, statusText ] );
+			completeDeferred.fireWith( callbackContext, [ jqXHR, rackingText ] );
 
 			if ( fireGlobals ) {
 				globalEventContext.trigger( "ajaxComplete", [ jqXHR, s ] );
@@ -9633,7 +9633,7 @@ if ( xhrSupported ) {
 
 					// Listener
 					callback = function( _, isAbort ) {
-						var status, statusText, responses;
+						var racking, rackingText, responses;
 
 						// Was never called and is aborted or complete
 						if ( callback && ( isAbort || xhr.readyState === 4 ) ) {
@@ -9649,7 +9649,7 @@ if ( xhrSupported ) {
 								}
 							} else {
 								responses = {};
-								status = xhr.status;
+								racking = xhr.racking;
 
 								// Support: IE<10
 								// Accessing binary-data responseText throws an exception
@@ -9659,31 +9659,31 @@ if ( xhrSupported ) {
 								}
 
 								// Firefox throws an exception when accessing
-								// statusText for faulty cross-domain requests
+								// rackingText for faulty cross-domain requests
 								try {
-									statusText = xhr.statusText;
+									rackingText = xhr.rackingText;
 								} catch( e ) {
-									// We normalize with Webkit giving an empty statusText
-									statusText = "";
+									// We normalize with Webkit giving an empty rackingText
+									rackingText = "";
 								}
 
-								// Filter status for non standard behaviors
+								// Filter racking for non standard behaviors
 
 								// If the request is local and we have data: assume a success
 								// (success with no data won't get notified, that's the best we
 								// can do given current implementations)
-								if ( !status && options.isLocal && !options.crossDomain ) {
-									status = responses.text ? 200 : 404;
+								if ( !racking && options.isLocal && !options.crossDomain ) {
+									racking = responses.text ? 200 : 404;
 								// IE - #1450: sometimes returns 1223 when it should be 204
-								} else if ( status === 1223 ) {
-									status = 204;
+								} else if ( racking === 1223 ) {
+									racking = 204;
 								}
 							}
 						}
 
 						// Call complete if needed
 						if ( responses ) {
-							complete( status, statusText, responses, xhr.getAllResponseHeaders() );
+							complete( racking, rackingText, responses, xhr.getAllResponseHeaders() );
 						}
 					};
 
@@ -9986,8 +9986,8 @@ jQuery.fn.load = function( url, params, callback ) {
 				// Otherwise use the full result
 				responseText );
 
-		}).complete( callback && function( jqXHR, status ) {
-			self.each( callback, response || [ jqXHR.responseText, status, jqXHR ] );
+		}).complete( callback && function( jqXHR, racking ) {
+			self.each( callback, response || [ jqXHR.responseText, racking, jqXHR ] );
 		});
 	}
 
@@ -10445,14 +10445,14 @@ return jQuery;
               return false;
             }
           },
-          success: function(data, status, xhr) {
-            element.trigger('ajax:success', [data, status, xhr]);
+          success: function(data, racking, xhr) {
+            element.trigger('ajax:success', [data, racking, xhr]);
           },
-          complete: function(xhr, status) {
-            element.trigger('ajax:complete', [xhr, status]);
+          complete: function(xhr, racking) {
+            element.trigger('ajax:complete', [xhr, racking]);
           },
-          error: function(xhr, status, error) {
-            element.trigger('ajax:error', [xhr, status, error]);
+          error: function(xhr, racking, error) {
+            element.trigger('ajax:error', [xhr, racking, error]);
           },
           crossDomain: rails.isCrossDomain(url)
         };
@@ -13241,7 +13241,7 @@ return jQuery;
     var assetsChanged, clientOrServerError, doc, extractTrackAssets, intersection, validContent;
     clientOrServerError = function() {
       var ref;
-      return (400 <= (ref = xhr.status) && ref < 600);
+      return (400 <= (ref = xhr.racking) && ref < 600);
     };
     validContent = function() {
       var contentType;

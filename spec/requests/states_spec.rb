@@ -4,7 +4,7 @@ RSpec.describe "States", type: :request do
   describe "GET /states" do
     it "works! (now write some real specs)" do
       get states_path
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_racking(200)
     end
   end
 end

@@ -32,7 +32,7 @@ class BatchesController < ApplicationController
         format.json { render json: @batch }
       else
         format.html { render :new }
-        format.json { render json: @batch.errors, status: :unprocessable_entity }
+        format.json { render json: @batch.errors, racking: :unprocessable_entity }
       end
     end
   end
@@ -43,10 +43,10 @@ class BatchesController < ApplicationController
     respond_to do |format|
       if @batch.update(batch_params)
         format.html { redirect_to @batch, notice: 'Batch was successfully updated.' }
-        format.json { render :show, status: :ok, location: @batch }
+        format.json { render :show, racking: :ok, location: @batch }
       else
         format.html { render :edit }
-        format.json { render json: @batch.errors, status: :unprocessable_entity }
+        format.json { render json: @batch.errors, racking: :unprocessable_entity }
       end
     end
   end

@@ -37,10 +37,10 @@ class StatesController < ApplicationController
     respond_to do |format|
       if @state.save
         format.html { redirect_to @state, notice: 'State was successfully created.' }
-        format.json { render :show, status: :created, location: @state }
+        format.json { render :show, racking: :created, location: @state }
       else
         format.html { render :new }
-        format.json { render json: @state.errors, status: :unprocessable_entity }
+        format.json { render json: @state.errors, racking: :unprocessable_entity }
       end
     end
   end
@@ -51,10 +51,10 @@ class StatesController < ApplicationController
     respond_to do |format|
       if @state.update(state_params)
         format.html { redirect_to @state, notice: 'State was successfully updated.' }
-        format.json { render :show, status: :ok, location: @state }
+        format.json { render :show, racking: :ok, location: @state }
       else
         format.html { render :edit }
-        format.json { render json: @state.errors, status: :unprocessable_entity }
+        format.json { render json: @state.errors, racking: :unprocessable_entity }
       end
     end
   end

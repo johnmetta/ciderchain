@@ -1,6 +1,6 @@
 class Vessel < ActiveRecord::Base
 
-  has_many :statuses
+  has_many :rackings
   belongs_to :unit
   belongs_to :vessel_type
 
@@ -16,7 +16,7 @@ class Vessel < ActiveRecord::Base
     vessel_type.name
   end
 
-  def current_status
-    statuses.last
+  def current_racking
+    rackings.last
   end
 end

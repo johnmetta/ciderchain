@@ -5,11 +5,19 @@ class UnitsController < ApplicationController
   # GET /units.json
   def index
     @units = Unit.all
+    respond_to do |format|
+      format.html
+      format.json { render json: UnitPresenter.collection(@units).as_json }
+    end
   end
 
   # GET /units/1
   # GET /units/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json { render json: @unit }
+    end
   end
 
   # GET /units/new
@@ -29,10 +37,10 @@ class UnitsController < ApplicationController
     respond_to do |format|
       if @unit.save
         format.html { redirect_to @unit, notice: 'Unit was successfully created.' }
-        format.json { render :show, status: :created, location: @unit }
+        format.json { render :show, racking: :created, location: @unit }
       else
         format.html { render :new }
-        format.json { render json: @unit.errors, status: :unprocessable_entity }
+        format.json { render json: @unit.errors, racking: :unprocessable_entity }
       end
     end
   end
@@ -43,10 +51,10 @@ class UnitsController < ApplicationController
     respond_to do |format|
       if @unit.update(unit_params)
         format.html { redirect_to @unit, notice: 'Unit was successfully updated.' }
-        format.json { render :show, status: :ok, location: @unit }
+        format.json { render :show, racking: :ok, location: @unit }
       else
         format.html { render :edit }
-        format.json { render json: @unit.errors, status: :unprocessable_entity }
+        format.json { render json: @unit.errors, racking: :unprocessable_entity }
       end
     end
   end

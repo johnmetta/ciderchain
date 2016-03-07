@@ -11,6 +11,4 @@
     React.DOM.div
       className: 'states'
       for state in @state.states
-        React.DOM.div
-          className: 'col-md-2'
-          React.createElement StateColumn, key: state.id, state: state
+        React.createElement StateColumn, key: state.id, state: state

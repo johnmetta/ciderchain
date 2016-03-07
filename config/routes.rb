@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :measurements
   resources :additions
   resources :units
-  resources :statuses
+  resources :rackings
   resources :users
 
   root to: 'home#index'

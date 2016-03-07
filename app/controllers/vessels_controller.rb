@@ -29,10 +29,10 @@ class VesselsController < ApplicationController
     respond_to do |format|
       if @vessel.save
         format.html { redirect_to @vessel, notice: 'Vessel was successfully created.' }
-        format.json { render :show, status: :created, location: @vessel }
+        format.json { render :show, racking: :created, location: @vessel }
       else
         format.html { render :new }
-        format.json { render json: @vessel.errors, status: :unprocessable_entity }
+        format.json { render json: @vessel.errors, racking: :unprocessable_entity }
       end
     end
   end
@@ -43,10 +43,10 @@ class VesselsController < ApplicationController
     respond_to do |format|
       if @vessel.update(vessel_params)
         format.html { redirect_to @vessel, notice: 'Vessel was successfully updated.' }
-        format.json { render :show, status: :ok, location: @vessel }
+        format.json { render :show, racking: :ok, location: @vessel }
       else
         format.html { render :edit }
-        format.json { render json: @vessel.errors, status: :unprocessable_entity }
+        format.json { render json: @vessel.errors, racking: :unprocessable_entity }
       end
     end
   end

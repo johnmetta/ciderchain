@@ -4,7 +4,7 @@ RSpec.describe "Vessels", type: :request do
   describe "GET /vessels" do
     it "works! (now write some real specs)" do
       get vessels_path
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_racking(200)
     end
   end
 end

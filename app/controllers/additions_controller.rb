@@ -15,7 +15,7 @@ class AdditionsController < ApplicationController
   # GET /additions/new
   def new
     @addition = Addition.new
-    @statuses = []
+    @rackings = []
   end
 
   # GET /additions/1/edit
@@ -26,15 +26,15 @@ class AdditionsController < ApplicationController
   # POST /additions.json
   def create
     @addition = Addition.new(addition_params)
-    @addition.status = @addition.batch.current_status
+    @addition.racking = @addition.batch.current_racking
 
     respond_to do |format|
       if @addition.save
         format.html { redirect_to @addition, notice: 'Addition was successfully created.' }
-        format.json { render :show, status: :created, location: @addition }
+        format.json { render :show, racking: :created, location: @addition }
       else
         format.html { render :new }
-        format.json { render json: @addition.errors, status: :unprocessable_entity }
+        format.json { render json: @addition.errors, racking: :unprocessable_entity }
       end
     end
   end
@@ -45,10 +45,10 @@ class AdditionsController < ApplicationController
     respond_to do |format|
       if @addition.update(addition_params)
         format.html { redirect_to @addition, notice: 'Addition was successfully updated.' }
-        format.json { render :show, status: :ok, location: @addition }
+        format.json { render :show, racking: :ok, location: @addition }
       else
         format.html { render :edit }
-        format.json { render json: @addition.errors, status: :unprocessable_entity }
+        format.json { render json: @addition.errors, racking: :unprocessable_entity }
       end
     end
   end
@@ -71,7 +71,7 @@ class AdditionsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def addition_params
-    params.require(:addition).permit(:name, :value, :unit_id, :batch_id, :notes, :status_id)
+    params.require(:addition).permit(:name, :value, :unit_id, :batch_id, :notes, :racking_id)
   end
 
 end

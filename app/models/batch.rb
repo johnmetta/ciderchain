@@ -1,14 +1,13 @@
 class Batch < ActiveRecord::Base
 
-  has_many  :statuses, dependent: :destroy
-  has_many  :additions, dependent: :destroy
+  has_many  :rackings, dependent: :destroy
   belongs_to :unit
-  belongs_to :source
+  has_one :source
 
   validates :code, presence: true
   validates :volume, presence: true
   validates :unit, presence: true
-  validate :unique_status
+  validate :unique_racking
 
   def self.default_code(designator='C')
     [Time.now.year, designator.to_s.upcase, next_batch_number].join
@@ -27,15 +26,15 @@ class Batch < ActiveRecord::Base
     days > 0 ? days : 0
   end
 
-  def current_status
-    statuses.last
+  def current_racking
+    rackings.last
   end
 
   private
 
-  def unique_status
-    if statuses.open.many?
-      errors.add(:status, 'can only have one open status')
+  def unique_racking
+    if rackings.open.many?
+      errors.add(:racking, 'can only have one open racking')
     end
   end
 

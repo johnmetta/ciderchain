@@ -29,10 +29,10 @@ class MeasurementsController < ApplicationController
     respond_to do |format|
       if @measurement.save
         format.html { redirect_to @measurement, notice: 'Measurement was successfully created.' }
-        format.json { render :show, status: :created, location: @measurement }
+        format.json { render :show, racking: :created, location: @measurement }
       else
         format.html { render :new }
-        format.json { render json: @measurement.errors, status: :unprocessable_entity }
+        format.json { render json: @measurement.errors, racking: :unprocessable_entity }
       end
     end
   end
@@ -43,10 +43,10 @@ class MeasurementsController < ApplicationController
     respond_to do |format|
       if @measurement.update(measurement_params)
         format.html { redirect_to @measurement, notice: 'Measurement was successfully updated.' }
-        format.json { render :show, status: :ok, location: @measurement }
+        format.json { render :show, racking: :ok, location: @measurement }
       else
         format.html { render :edit }
-        format.json { render json: @measurement.errors, status: :unprocessable_entity }
+        format.json { render json: @measurement.errors, racking: :unprocessable_entity }
       end
     end
   end

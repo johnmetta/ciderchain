@@ -9,9 +9,9 @@
     = batch.days_in
     days
     %br
-    = batch.current_status.vessel.type_name
-    = batch.current_status.vessel.code
+    = batch.current_racking.vessel.type_name
+    = batch.current_racking.vessel.code
     %br
     %span.badge
-      = batch.current_status.volume
-      = batch.current_status.unit.name.pluralize
+      = batch.current_racking.volume
+      = batch.current_racking.unit.name.pluralize

@@ -1,6 +1,6 @@
 class Measurement < ActiveRecord::Base
 
-  belongs_to  :status
+  belongs_to  :racking
   belongs_to  :unit
 
   validates :name, presence: true

@@ -4,7 +4,11 @@
     name: ''
     code: ''
     volume: ''
+    unit_id: 2
   handleChange: (e) ->
+    name = e.target.name
+    @setState "#{ name }": e.target.value
+  onChildChanged: (e) ->
     name = e.target.name
     @setState "#{ name }": e.target.value
   handleSubmit: (e) ->
@@ -45,10 +49,12 @@
         React.DOM.input
           type: 'text'
           className: 'form-control'
-          placeholder: 'volume'
+          placeholder: 'Volume'
           name: 'volume'
           value: @state.volume
           onChange: @handleChange
+        React.createElement UnitsSelect, unit_id: @state.unit_id, units: @props.units, callbackParent: @onChildChanged
+        React.createElement UnitName, unit_id: @state.unit_id
       React.DOM.button
         type: 'submit'
         className: 'btn btn-primary'

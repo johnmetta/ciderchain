@@ -11,11 +11,12 @@
         @props.handleDeleteBatch @props.batch
   render: ->
     React.DOM.tr null,
-      React.DOM.td null, @props.batch.created_at
+      React.DOM.td null, dateFormat(@props.batch.created_at)
       React.DOM.td null, @props.batch.name
       React.DOM.td null, @props.batch.code
       React.DOM.td null, @props.batch.volume
-      React.DOM.td null, @props.batch.unit_id
+      React.DOM.td null,
+        React.createElement UnitName, unit_id: @props.batch.unit_id
       React.DOM.td null,
         React.DOM.a
           className: 'btn btn-danger'
