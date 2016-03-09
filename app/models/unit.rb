@@ -5,14 +5,12 @@ class Unit < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validates :factor, presence: true
 
-  def self.liter
-    Unit.find_by_name 'liter'
-  end
-  def self.gallon
-    Unit.find_by_name 'gallon'
-  end
-  def self.barrel
-    Unit.find_by_name 'barrel'
+  def self.method_missing(method, *args)
+    if Unit.all.map(&:name).include? method.to_s.downcase
+      Unit.find_by_name(method)
+    else
+      super # <- make sure we pass through to Object#method_missing
+    end
   end
 end
 

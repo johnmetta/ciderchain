@@ -1,6 +1,8 @@
 @BatchCard = React.createClass
   getInitialState: ->
-    show: true
+    show: false
+  getDefaultState: ->
+    last_addition: @props.batch.current_racking.last_addition.name
   handleToggle: (e) ->
     e.preventDefault()
     @setState show: !@state.show
@@ -12,6 +14,9 @@
       else
         @props.batch.code
       React.createElement VolumeBadge, unit_id: @props.batch.unit_id, volume: @props.batch.volume
+  onChildChanged: (e) ->
+    name = e.target.name
+    @setState "#{ name }": e.target.value
   batchButton: ->
     React.DOM.button
       onClick: @handleToggle
@@ -20,6 +25,11 @@
       'aria-haspopup': 'true'
       'aria-expanded': 'false'
       @headerName()
+  lastAddition: ->
+    React.DOM.div
+      className: 'last-addition'
+  handleNewAddition: (data) ->
+    @setState 'last_addition': data.name
   batchDetails: ->
     React.DOM.div
       className: 'panel panel-info'
@@ -38,7 +48,9 @@
               React.DOM.li null, @props.batch.code
             React.DOM.li null, dateFormat(@props.batch.created_at)
             React.DOM.li null, @props.batch.current_vessel.code
-        React.createElement SimpleAdditionForm, unit_id: @props.batch.unit_id, racking: @props.batch.current_racking
+            if (@props.batch.current_racking.last_addition.name)
+              React.DOM.li null, @props.batch.current_racking.last_addition.name
+        React.createElement SimpleAdditionForm, unit_id: @props.batch.unit_id, racking_id: @props.batch.current_racking.id, callbackParent: @handleNewAddition
   render: ->
     if @state.show
       @batchDetails()

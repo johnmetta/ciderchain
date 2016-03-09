@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   resources :units
   resources :rackings
   resources :users
+  resources :additives
+  resources :sources
 
   root to: 'home#index'
 end

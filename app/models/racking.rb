@@ -4,8 +4,9 @@ class Racking < ActiveRecord::Base
   belongs_to :unit
   belongs_to :vessel
   belongs_to :batch
-  belongs_to :closed_by, class_name: Racking.name
-  has_many  :measurements, dependent: :destroy
+  belongs_to :closed_by, class_name: Racking.name, foreign_key: :closed_by_id
+  has_many  :measurements
+  has_many  :additions
 
   validates :state, presence: true
   validates :volume, presence: true

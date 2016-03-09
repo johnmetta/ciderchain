@@ -1,10 +1,10 @@
 class Batch < ActiveRecord::Base
 
   has_many  :rackings, dependent: :destroy
+  has_many :sources
   belongs_to :unit
-  has_one :source
 
-  validates :code, presence: true
+  validates :code, presence: true, uniqueness: true
   validates :volume, presence: true
   validates :unit, presence: true
   validate :unique_racking

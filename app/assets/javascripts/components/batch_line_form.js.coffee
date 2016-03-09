@@ -53,8 +53,7 @@
           name: 'volume'
           value: @state.volume
           onChange: @handleChange
-        React.createElement UnitsSelect, unit_id: @state.unit_id, units: @props.units, callbackParent: @onChildChanged
-        React.createElement UnitName, unit_id: @state.unit_id
+        React.createElement UnitsSelect, unit_id: @state.unit_id, units: @props.units, callbackParent: @handleChange
       React.DOM.button
         type: 'submit'
         className: 'btn btn-primary'
