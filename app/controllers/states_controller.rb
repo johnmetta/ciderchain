@@ -8,10 +8,10 @@ class StatesController < ApplicationController
     unless current_user
       redirect_to login_url and return
     end
-    @states = State.front_page
+    @states = State.all
     respond_to do |format|
       format.html { @states }
-      format.json { StatePresenter.collection(@states).as_json }
+      format.json { render json: StatePresenter.collection(@states).as_json }
     end
   end
 

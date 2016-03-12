@@ -1,6 +1,6 @@
-@SimpleAdditionForm = React.createClass
+@SimpleMeasurementForm = React.createClass
   getInitialState: ->
-    edit: true
+    edit: false
     unit_id: @props.unit_id
     racking_id: @props.racking_id
   onChildChanged: (e) ->
@@ -15,7 +15,7 @@
   handleSubmit: (e) ->
     e.preventDefault()
     @setState 'edit': null
-    $.post '/additions', { addition: @state }, (data) =>
+    $.post '/measurements', { measurement: @state }, (data) =>
       @props.callbackParent data
       @setState @getInitialState()
     , 'JSON'
@@ -23,21 +23,20 @@
     React.DOM.a
       className: "btn btn-success"
       onClick: @handleToggle
-      'Add'
+      'Measure'
   addForm: ->
     React.DOM.form
       className: 'form-inline'
       onSubmit: @handleSubmit
       React.DOM.div
         className: 'form-group'
-        React.createElement SimpleSelect, singular: 'additive', plural: 'additives', callbackParent: @handleChange
-        React.createElement SimpleSelect, singular: 'source', plural: 'sources', callbackParent: @handleChange
+        React.createElement SimpleSelect, singular: 'property', plural: 'properties', callbackParent: @handleChange
         React.DOM.input
           className: 'form-control'
           type: 'text'
-          name: 'amount'
-          placeholder: 'Amount'
-          value: @state.amount
+          name: 'value'
+          placeholder: 'Value'
+          value: @state.value
           onChange: @handleChange
         React.createElement SimpleSelect, singular: 'unit', plural: 'units', callbackParent: @handleChange
         React.DOM.button
@@ -46,7 +45,7 @@
           disabled: !@valid()
           'Add'
   valid: ->
-    @state.unit_id && @state.amount && @state.additive_id
+    @state.property_id && @state.value
   render: ->
     if @state.edit
       @addForm()

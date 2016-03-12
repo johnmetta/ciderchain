@@ -3,7 +3,8 @@ class StatePresenter < SimpleDelegator
 
   def as_json
     {
-      name: name.humanize,
+      id: id,
+      name: name,
       total_volume: total_volume.round,
       units: Unit.liter.short_name,
       gallons: (total_volume * (1/Unit.gallon.factor)).round(1),

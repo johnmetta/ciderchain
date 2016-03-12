@@ -7,10 +7,7 @@
     =javascript_include_tag 'application', 'data-turbolinks-track' => true
 
   %body
-    %nav{class: 'navbar navbar-default navbar-fixed-top'}
-      .container-fluid
-        =react_component 'Nav'
-        =react_component 'NavButtons', current_user: current_user ? UserPresenter.new(current_user).as_json : nil
+    =react_component 'NavBar', current_user: current_user ? UserPresenter.new(current_user).as_json : nil
 
     %p
     .container-fluid

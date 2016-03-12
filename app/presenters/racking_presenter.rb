@@ -12,7 +12,7 @@ class RackingPresenter < SimpleDelegator
       closed: closed,
       created_at: created_at,
       closed_by_id: closed_by_id,
-      last_addition: additions.last ? AdditionPresenter.new(additions.last).as_json : nil
+      last_addition: additions.last ? AdditionPresenter.new(additions.last).as_json : {}
     }
   end
 

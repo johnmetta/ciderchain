@@ -10,6 +10,7 @@ class BatchPresenter < SimpleDelegator
       days_in: days_in,
       volume: volume,
       unit_id: unit_id,
+      unit_short_name: unit.short_name,
       base_volume: unit == Unit.liter ? volume : (volume*unit.factor).round,
       current_racking: RackingPresenter.new(current_racking).as_json,
       current_vessel: VesselPresenter.new(current_racking.vessel).as_json

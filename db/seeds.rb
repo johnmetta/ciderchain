@@ -1,9 +1,11 @@
-Unit.create!({ name: 'liter', dimensions: 3, factor: 1.0, base_id: nil, short_name: 'L' })
+Unit.create!([
+               { name: 'liter', dimensions: 3, factor: 1.0, base_id: nil, short_name: 'L' },
+               { name: 'gram', factor: 1.0, base_id: nil, short_name: 'g' }
+             ])
 Unit.create!([
                { name: 'gallon', dimensions: 3, factor: 3.78541178, base_id: Unit.liter.id, short_name: 'gal' },
                { name: 'barrel', dimensions: 3, factor: 225.0, base_id: Unit.liter.id, short_name: 'BBL' },
                { name: 'milliliter', factor: 0.001, base_id: Unit.liter.id, short_name: 'ml' },
-               { name: 'gram', factor: 1.0, base_id: nil, short_name: 'g' },
                { name: 'milligram', factor: 0.001, base_id: Unit.gram.id, short_name: 'mg' },
              ])
 Batch.create!([
@@ -78,7 +80,10 @@ Racking.create!([
                   { volume: 50, batch_id: 1, unit_id: Unit.gallon.id, vessel_id: Vessel.find_by_code('FT50_1').id, state_id: 4, closed: nil },
                   { volume: 50, batch_id: 2, unit_id: Unit.gallon.id, vessel_id: Vessel.find_by_code('FT50_2').id, state_id: 4, closed: nil },
                   { volume: 225, batch_id: 3, unit_id: Unit.liter.id, vessel_id: Vessel.find_by_code('BBL112_wine').id, state_id: 5, closed: nil }
-               ])
+                ])
 User.create!([
                { email: 'john@spokeandsail.com', password: 'et48ID', password_confirmation: 'et48ID', remember_me_token: nil, remember_me_token_expires_at: nil, reset_password_token: nil, reset_password_token_expires_at: nil, reset_password_email_sent_at: nil }
              ])
+%w{TA pH temperature brix SO2 malic\ acid}.each do |prop|
+  Property.create!(name: prop)
+end
