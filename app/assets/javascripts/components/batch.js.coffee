@@ -15,8 +15,7 @@
       React.DOM.td null, @props.batch.name
       React.DOM.td null, @props.batch.code
       React.DOM.td null, @props.batch.volume
-      React.DOM.td null,
-        React.createElement UnitName, unit_id: @props.batch.unit_id
+      React.DOM.td null, @props.batch.unit_name
       React.DOM.td null,
         React.DOM.a
           className: 'btn btn-danger'

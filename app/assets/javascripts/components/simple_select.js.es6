@@ -1,6 +1,6 @@
 class SimpleSelect extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       values: []
     };
