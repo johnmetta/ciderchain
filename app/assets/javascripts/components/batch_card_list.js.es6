@@ -2,7 +2,7 @@ class BatchCardDetails extends React.Component {
   render() {
     return (
       <section className='batch-card-details'>
-        <ul className='list-unstyled well'>
+        <ul className='list-unstyled well well-sm'>
           <ListItem data={this.props.batch.code} />
           <ListItem data={dateFormat(this.props.batch.created_at)} />
           <ListItem data={this.props.batch.current_vessel.code} />
