@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-@Batches = React.createClass
+@BatchesOld = React.createClass
   getInitialState: ->
     batches: @props.data
     units: @props.units
@@ -32,5 +32,5 @@
             React.DOM.th null, 'Actions'
         React.DOM.tbody null,
           for batch in @state.batches
-            React.createElement Batch, key: batch.id, batch: batch, handleDeleteBatch: @deleteBatch
+            React.createElement Batch, key: batch.id, batch: batch,
       React.createElement BatchLineForm, handleNewBatch: @addBatch, units: @state.units

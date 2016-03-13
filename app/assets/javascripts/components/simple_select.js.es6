@@ -1,12 +1,14 @@
 class SimpleSelect extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      values: []
+      values: [],
+      formName: this.props.singular + "_id"
     };
+    this.handleChange = this.handleChange.bind(this);
   }
   handleChange(e) {
-    this.callbackParent(e);
+    this.props.callbackParent(e);
   }
   componentDidMount() {
     this.serverRequest = $.getJSON(this.props.plural, function (result) {
@@ -19,7 +21,7 @@ class SimpleSelect extends React.Component {
   render() {
     return (
       <select className='form-control'
-        name="{this.props.singular}_id"
+        name={this.state.formName}
         value={this.props.current_value}
         onChange={this.handleChange}>
         <option value=''>{capitalizeFirstLetter(this.props.singular)}</option>

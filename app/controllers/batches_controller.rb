@@ -4,7 +4,7 @@ class BatchesController < ApplicationController
   # GET /batches
   # GET /batches.json
   def index
-    @batches = Batch.all
+    @batches = BatchPresenter.collection(Batch.all).as_json
   end
 
   # GET /batches/1
@@ -29,7 +29,7 @@ class BatchesController < ApplicationController
     respond_to do |format|
       if @batch.save
         format.html { redirect_to @batch, notice: 'Batch was successfully created.' }
-        format.json { render json: @batch }
+        format.json { render json: BatchPresenter.new(@batch).as_json }
       else
         format.html { render :new }
         format.json { render json: @batch.errors, racking: :unprocessable_entity }
