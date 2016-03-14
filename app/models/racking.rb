@@ -11,8 +11,8 @@ class Racking < ActiveRecord::Base
   validates :state, presence: true
   validates :volume, presence: true
   validates :unit, presence: true
-  validates :vessel, presence: true
   validates :batch, presence: true
+  validate  :check_packaged
 
   before_create :default_volume
   after_commit  :close_previous_racking
@@ -50,8 +50,18 @@ class Racking < ActiveRecord::Base
   end
 
   def close_previous_racking
+    return unless batch.present?
     unless self.closed
       batch.rackings.open.reject{|s| s.id == id}.map{|s| s.close! self }
+    end
+  end
+
+  def check_packaged
+    if state == State.find_by_name('packaged')
+      self.closed = true
+      self.packaged = true
+    else
+      errors.add(:vessel, 'must be present') unless self.vessel_id
     end
   end
 end

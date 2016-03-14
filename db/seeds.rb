@@ -43,7 +43,7 @@ State.create!([
 VesselType.create!([
                      { name: 'FlexTank', abbreviation: 'FT' },
                      { name: 'Brite Tank', abbreviation: 'Brite' },
-                     { name: 'Barrel', abbreviation: 'BBL' }
+                     { name: 'Barrel', abbreviation: 'BBL' },
                    ])
 Vessel.create!([
                  { vessel_type_id: VesselType.barrel.id, code: 'BBL101_wine', volume: 225, unit_id: Unit.liter.id },

@@ -30,6 +30,15 @@ class Batch < ActiveRecord::Base
     rackings.last
   end
 
+  def package!
+    self.rackings.create(
+                   volume: volume,
+                   unit_id: unit.id,
+                   state: State.find_by_name('packaged')
+    )
+    self.save!
+  end
+
   private
 
   def unique_racking

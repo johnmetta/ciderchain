@@ -12,7 +12,7 @@ class BatchPresenter < SimpleDelegator
       unit: UnitPresenter.new(unit).as_json,
       base_volume: unit == Unit.liter ? volume : (volume*unit.factor).round,
       current_racking: current_racking ? RackingPresenter.new(current_racking).as_json : nil,
-      current_vessel: current_racking ? VesselPresenter.new(current_racking.vessel).as_json : nil
+      current_vessel: (current_racking && !current_racking.packaged) ? VesselPresenter.new(current_racking.vessel).as_json : nil
     }
   end
 end

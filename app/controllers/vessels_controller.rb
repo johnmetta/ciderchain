@@ -12,7 +12,7 @@ class VesselsController < ApplicationController
   end
 
   def free
-    @vessels = Vessel.all.select(&:open?)
+    @vessels = Vessel.select(&:open?) #TODO: optimize!
     respond_to do |format|
       format.html
       format.json { render json: VesselPresenter.collection(@vessels).as_json }
