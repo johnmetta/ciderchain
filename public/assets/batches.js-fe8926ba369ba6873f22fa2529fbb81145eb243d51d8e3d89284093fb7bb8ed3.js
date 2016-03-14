@@ -6,68 +6,97 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var NavBar = (function (_React$Component) {
-  _inherits(NavBar, _React$Component);
+var Batches = (function (_React$Component) {
+  _inherits(Batches, _React$Component);
 
-  function NavBar(props) {
-    _classCallCheck(this, NavBar);
+  function Batches(props) {
+    _classCallCheck(this, Batches);
 
-    _get(Object.getPrototypeOf(NavBar.prototype), 'constructor', this).call(this, props);
+    _get(Object.getPrototypeOf(Batches.prototype), 'constructor', this).call(this, props);
+    this.state = {
+      batches: this.props.batches
+    };
+    this.addBatch = this.addBatch.bind(this);
+    this.deleteBatch = this.deleteBatch.bind(this);
   }
 
-  _createClass(NavBar, [{
-    key: 'logoutLink',
-    value: function logoutLink() {
-      if (this.props.current_user) return React.createElement(
-        'a',
-        { href: '/logout' },
-        'Logout'
-      );else return React.createElement(
-        'a',
-        { href: '/login' },
-        'Login'
-      );
+  _createClass(Batches, [{
+    key: 'addBatch',
+    value: function addBatch(batch) {
+      var batches = this.state.batches.slice();
+      batches.push(batch);
+      this.setState({ batches: batches });
+    }
+  }, {
+    key: 'deleteBatch',
+    value: function deleteBatch(batch) {
+      var batches = this.state.batches.slice();
+      var index = this.state.batches.indexOf(batch);
+      batches.splice(index, 1);
+      this.setState({ batches: batches });
     }
   }, {
     key: 'render',
     value: function render() {
+      var rows = [];
+      this.state.batches.map(function (batch) {
+        rows.push(React.createElement(Batch, { key: batch.id, handleDeleteBatch: this.deleteBatch, batch: batch }));
+      }, this);
       return React.createElement(
-        'nav',
-        { className: 'navbar navbar-default navbar-fixed-top' },
+        'div',
+        { className: 'batches' },
+        React.createElement(BatchLineForm, { handleNewBatch: this.addBatch }),
+        React.createElement('hr', null),
         React.createElement(
-          'div',
-          { className: 'container-fluid' },
+          'table',
+          { className: 'table table-bordered table-striped' },
           React.createElement(
-            'div',
-            { className: 'navbar-header' },
+            'thead',
+            null,
             React.createElement(
-              'a',
-              { className: 'navbar-brand', href: this.props.home_link },
-              this.props.home_name
+              'tr',
+              null,
+              React.createElement(
+                'td',
+                null,
+                'Date'
+              ),
+              React.createElement(
+                'td',
+                null,
+                'Name'
+              ),
+              React.createElement(
+                'td',
+                null,
+                'Code'
+              ),
+              React.createElement(
+                'td',
+                null,
+                'Volume'
+              ),
+              React.createElement(
+                'td',
+                null,
+                'Units'
+              ),
+              React.createElement(
+                'td',
+                null,
+                'Actions'
+              )
             )
           ),
           React.createElement(
-            'div',
-            { className: 'navbar-collapse collapse' },
-            React.createElement(
-              'ul',
-              { className: 'nav navbar-nav' },
-              this.props.links.map(function (link) {
-                return React.createElement(ListAddressElement, { href: link, text: link, key: link });
-              })
-            ),
-            React.createElement(
-              'div',
-              { className: 'navbar-text navbar-right' },
-              this.logoutLink()
-            )
+            'tbody',
+            null,
+            rows
           )
         )
       );
     }
   }]);
 
-  return NavBar;
+  return Batches;
 })(React.Component);
-
-NavBar.defaultProps = { home_link: '/', home_name: 'Home', links: ['batches', 'rackings', 'vessels', 'measurements', 'additions'] };

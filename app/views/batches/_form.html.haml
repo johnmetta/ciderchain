@@ -2,7 +2,7 @@
   .form-group
     = f.label :code, class: 'control-label col-lg-2'
     .col-lg-10
-      = f.text_field :code, class: 'form-control', required: true, value: Batch.default_code
+      = f.text_field :code, class: 'form-control', required: true, value: Batch.new_code
     = f.error_span(:code)
   .form-group
     = f.label :volume, class: 'control-label col-lg-2'

@@ -9,12 +9,20 @@ class Batch < ActiveRecord::Base
   validates :unit, presence: true
   validate :unique_racking
 
-  def self.default_code(designator='C')
-    [Time.now.year, designator.to_s.upcase, next_batch_number].join
+  def self.new_code
+    code_string(next_batch_number)
+  end
+
+  def self.code_string(batch_number)
+    [Time.now.year, 'C', sprintf('%04d',batch_number)].join
   end
 
   def self.next_batch_number
-    sprintf '%04d', this_year.count+1
+    batch_number = this_year.count+1
+    while Batch.where(code: code_string(batch_number)).any?
+      batch_number += 1
+    end
+    batch_number
   end
 
   def self.this_year

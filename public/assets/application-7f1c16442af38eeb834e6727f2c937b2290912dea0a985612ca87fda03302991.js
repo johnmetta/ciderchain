@@ -33722,12 +33722,12 @@ var Accordion = (function (_React$Component) {
     value: function render() {
       var style = {
         shown: { display: 'inherit' },
-        hidden: { display: 'none' }
+        hidden: { display: 'none', 'margin-bottom': '1px' }
       };
       var stateStyle = this.state.shown ? style.shown : style.hidden;
       return React.createElement(
         'section',
-        { className: 'panel panel-info' },
+        { className: 'panel panel-info accordion' },
         React.createElement(
           'div',
           { className: 'accordion-header panel-heading', onClick: this.toggle },
@@ -33748,37 +33748,114 @@ var Accordion = (function (_React$Component) {
 
   return Accordion;
 })(React.Component);
-(function() {
-  this.Batch = React.createClass({
-    getInitialState: function() {
-      return {
-        unit: {
-          name: ''
-        }
-      };
-    },
-    handleDelete: function(e) {
-      e.preventDefault();
-      return $.ajax({
-        method: 'DELETE',
-        url: "/batches/" + this.props.batch.id,
-        dataType: 'JSON',
-        success: (function(_this) {
-          return function() {
-            return _this.props.handleDeleteBatch(_this.props.batch);
-          };
-        })(this)
-      });
-    },
-    render: function() {
-      return React.DOM.tr(null, React.DOM.td(null, dateFormat(this.props.batch.created_at)), React.DOM.td(null, this.props.batch.name), React.DOM.td(null, this.props.batch.code), React.DOM.td(null, this.props.batch.volume), React.DOM.td(null, this.props.batch.unit_name), React.DOM.td(null, React.DOM.a({
-        className: 'btn btn-danger',
-        onClick: this.handleDelete
-      }, 'Delete')));
-    }
-  });
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-}).call(this);
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AdditiveSelector = (function (_React$Component) {
+  _inherits(AdditiveSelector, _React$Component);
+
+  function AdditiveSelector() {
+    _classCallCheck(this, AdditiveSelector);
+
+    _get(Object.getPrototypeOf(AdditiveSelector.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(AdditiveSelector, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(SimpleSelect, _extends({}, this.props, { singular: 'additive', plural: 'additives' }));
+    }
+  }]);
+
+  return AdditiveSelector;
+})(React.Component);
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Batch = (function (_React$Component) {
+  _inherits(Batch, _React$Component);
+
+  function Batch(props) {
+    _classCallCheck(this, Batch);
+
+    _get(Object.getPrototypeOf(Batch.prototype), "constructor", this).call(this, props);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  _createClass(Batch, [{
+    key: "handleDelete",
+    value: function handleDelete(e) {
+      var url = "/batches/" + this.props.batch.id;
+      var handler = $.ajax({
+        url: url,
+        type: "DELETE",
+        dataType: "json",
+        success: (function (data) {
+          this.props.handleDeleteBatch(this.props.batch);
+        }).bind(this)
+      });
+      handler.fail(function () {
+        console.log('error');
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement(
+        "tr",
+        null,
+        React.createElement(
+          "td",
+          null,
+          dateFormat(this.props.batch.created_at)
+        ),
+        React.createElement(
+          "td",
+          null,
+          this.props.batch.name
+        ),
+        React.createElement(
+          "td",
+          null,
+          this.props.batch.code
+        ),
+        React.createElement(
+          "td",
+          null,
+          this.props.batch.volume
+        ),
+        React.createElement(
+          "td",
+          null,
+          this.props.batch.unit.name
+        ),
+        React.createElement(
+          "td",
+          null,
+          React.createElement(
+            "a",
+            { className: "btn btn-danger", onClick: this.handleDelete },
+            "Delete"
+          )
+        )
+      );
+    }
+  }]);
+
+  return Batch;
+})(React.Component);
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -33872,7 +33949,7 @@ var BatchCardHeader = (function (_React$Component) {
       return React.createElement(
         'section',
         { className: 'batch-card-header' },
-        React.createElement(VolumeBadge, { value: this.props.batch.volume, units: this.props.batch.unit_short_name }),
+        React.createElement(VolumeBadge, { value: this.props.batch.volume, units: this.props.batch.unit.short_name }),
         React.createElement(BatchName, { batch: this.props.batch })
       );
     }
@@ -33930,113 +34007,104 @@ var BatchCardDetails = (function (_React$Component) {
 
   return BatchCardDetails;
 })(React.Component);
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var BatchDetails = (function (_React$Component) {
-  _inherits(BatchDetails, _React$Component);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-  function BatchDetails(props) {
-    _classCallCheck(this, BatchDetails);
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-    _get(Object.getPrototypeOf(BatchDetails.prototype), "constructor", this).call(this, props);
+var BatchLineForm = (function (_React$Component) {
+  _inherits(BatchLineForm, _React$Component);
+
+  function BatchLineForm(props) {
+    _classCallCheck(this, BatchLineForm);
+
+    _get(Object.getPrototypeOf(BatchLineForm.prototype), 'constructor', this).call(this, props);
+    this.state = {
+      created_at: new Date().toJSON().slice(0, 10),
+      unit_id: 3,
+      code: '',
+      volume: '',
+      name: '',
+      state_id: '',
+      vessel_id: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  return BatchDetails;
-})(React.Component);
-(function() {
-  this.BatchLineForm = React.createClass({
-    getInitialState: function() {
-      return {
-        created_at: new Date().toJSON().slice(0, 10),
-        name: '',
-        code: '',
-        volume: '',
-        unit_id: 2
-      };
-    },
-    handleChange: function(e) {
-      var name, obj;
-      name = e.target.name;
-      return this.setState((
-        obj = {},
-        obj["" + name] = e.target.value,
-        obj
-      ));
-    },
-    onChildChanged: function(e) {
-      var name, obj;
-      name = e.target.name;
-      return this.setState((
-        obj = {},
-        obj["" + name] = e.target.value,
-        obj
-      ));
-    },
-    handleSubmit: function(e) {
-      e.preventDefault();
-      return $.post('', {
-        batch: this.state
-      }, (function(_this) {
-        return function(data) {
-          _this.props.handleNewBatch(data);
-          return _this.setState(_this.getInitialState());
-        };
-      })(this), 'JSON');
-    },
-    valid: function() {
-      return this.state.name && this.state.code && this.state.volume;
-    },
-    render: function() {
-      return React.DOM.form({
-        className: 'form-inline',
-        onSubmit: this.handleSubmit
-      }, React.DOM.div({
-        className: 'form-group'
-      }, React.DOM.input({
-        type: 'text',
-        className: 'form-control',
-        placeholder: 'Created',
-        name: 'created_at',
-        value: this.state.created_at,
-        onChange: this.handleChange
-      }), React.DOM.input({
-        type: 'text',
-        className: 'form-control',
-        placeholder: 'Name',
-        name: 'name',
-        value: this.state.name,
-        onChange: this.handleChange
-      }), React.DOM.input({
-        type: 'text',
-        className: 'form-control',
-        placeholder: 'Code',
-        name: 'code',
-        value: this.state.code,
-        onChange: this.handleChange
-      }), React.DOM.input({
-        type: 'text',
-        className: 'form-control',
-        placeholder: 'Volume',
-        name: 'volume',
-        value: this.state.volume,
-        onChange: this.handleChange
-      }), React.createElement(SimpleSelect, {
-        singular: 'unit',
-        plural: 'units',
-        callbackParent: this.handleChange
-      })), React.DOM.button({
-        type: 'submit',
-        className: 'btn btn-primary',
-        disabled: !this.valid()
-      }, 'Create Batch'));
+  _createClass(BatchLineForm, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      var batch = { batch: this.state };
+      $.ajax({
+        url: "/batches",
+        type: "POST",
+        dataType: "json",
+        data: batch,
+        success: (function (data) {
+          this.props.handleNewBatch(data);
+        }).bind(this)
+      });
     }
-  });
+  }, {
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+      if (e.target.name == 'vessel_id' && this.state.volume == '') $.getJSON('/vessels/' + e.target.value, (function (result) {
+        this.setState({
+          volume: result.volume,
+          unit_id: result.unit_id
+        });
+      }).bind(this));
+    }
+  }, {
+    key: 'valid',
+    value: function valid() {
+      return this.state.name && this.state.code && this.state.volume && this.state.unit_id && this.state.vessel_id && this.state.state_id;
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.serverRequest = $.getJSON('/batches/latest_code', (function (result) {
+        this.setState({
+          code: result.code
+        });
+      }).bind(this));
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.serverRequest.abort();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'form',
+        { className: 'form-inline', onSubmit: this.handleSubmit },
+        React.createElement('input', { type: 'text', className: 'form-control', name: 'created_at', value: this.state.created_at, onChange: this.handleChange }),
+        React.createElement('input', { type: 'text', className: 'form-control', name: 'name', placeholder: 'Name', value: this.state.name, onChange: this.handleChange }),
+        React.createElement('input', { type: 'text', className: 'form-control', name: 'code', value: this.state.code, onChange: this.handleChange }),
+        React.createElement('input', { type: 'text', className: 'form-control', name: 'volume', placeholder: 'volume', value: this.state.volume, onChange: this.handleChange }),
+        React.createElement(UnitSelector, { current_value: this.state.unit_id, callbackParent: this.handleChange, unit_id: this.state.unit_id }),
+        React.createElement(StateSelector, { callbackParent: this.handleChange }),
+        React.createElement(VesselSelector, { callbackParent: this.handleChange, url: '/vessels/free' }),
+        React.createElement(
+          'button',
+          { className: 'btn btn-primary', disabled: false, type: 'submit' },
+          'Create Batch'
+        )
+      );
+    }
+  }]);
 
-}).call(this);
+  return BatchLineForm;
+})(React.Component);
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -34211,6 +34279,34 @@ var NavBar = (function (_React$Component) {
 })(React.Component);
 
 NavBar.defaultProps = { home_link: '/', home_name: 'Home', links: ['batches', 'rackings', 'vessels', 'measurements', 'additions'] };
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PropertySelector = (function (_React$Component) {
+  _inherits(PropertySelector, _React$Component);
+
+  function PropertySelector() {
+    _classCallCheck(this, PropertySelector);
+
+    _get(Object.getPrototypeOf(PropertySelector.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(PropertySelector, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(SimpleSelect, _extends({}, this.props, { singular: 'property', plural: 'properties' }));
+    }
+  }]);
+
+  return PropertySelector;
+})(React.Component);
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -34234,19 +34330,22 @@ var SimpleAdditionForm = (function (_React$Component) {
   }
 
   _createClass(SimpleAdditionForm, [{
+    key: 'handleChange',
+    value: function handleChange(e) {}
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
         'section',
         null,
-        React.createElement(SimpleSelect, { singular: 'additive', plural: 'additives' }),
-        React.createElement(SimpleSelect, { singular: 'source', plural: 'sources' }),
+        React.createElement(AdditiveSelector, { callbackParent: this.handleChange }),
+        React.createElement(SourceSelector, { callbackParent: this.handleChange }),
         React.createElement('input', { className: 'form-control',
           type: 'text',
           name: 'amount',
           placeholder: 'Amount',
           value: this.state.amount }),
-        React.createElement(SimpleSelect, { singular: 'unit', plural: 'units' }),
+        React.createElement(UnitSelector, { callbackParent: this.handleChange }),
         React.createElement(
           'button',
           { className: 'btn btn-primary',
@@ -34312,19 +34411,22 @@ var SimpleMeasurementForm = (function (_React$Component) {
   }
 
   _createClass(SimpleMeasurementForm, [{
+    key: 'handleChange',
+    value: function handleChange(e) {}
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
         'section',
         null,
-        React.createElement(SimpleSelect, { singular: 'property', plural: 'properties' }),
-        React.createElement(SimpleSelect, { singular: 'source', plural: 'sources' }),
+        React.createElement(PropertySelector, { callbackParent: this.handleChange }),
+        React.createElement(SourceSelector, { callbackParent: this.handleChange }),
         React.createElement('input', { className: 'form-control',
           type: 'text',
           name: 'value',
           placeholder: 'Value',
           value: this.state.value }),
-        React.createElement(SimpleSelect, { singular: 'unit', plural: 'units' }),
+        React.createElement(UnitSelector, { callbackParent: this.handleChange }),
         React.createElement(
           'button',
           { className: 'btn btn-primary',
@@ -34348,24 +34450,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 var SimpleSelect = (function (_React$Component) {
   _inherits(SimpleSelect, _React$Component);
 
-  function SimpleSelect() {
+  function SimpleSelect(props) {
     _classCallCheck(this, SimpleSelect);
 
-    _get(Object.getPrototypeOf(SimpleSelect.prototype), 'constructor', this).call(this);
+    _get(Object.getPrototypeOf(SimpleSelect.prototype), 'constructor', this).call(this, props);
     this.state = {
-      values: []
+      values: [],
+      formName: this.props.singular + "_id"
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   _createClass(SimpleSelect, [{
     key: 'handleChange',
     value: function handleChange(e) {
-      this.callbackParent(e);
+      this.props.callbackParent(e);
     }
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.serverRequest = $.getJSON(this.props.plural, (function (result) {
+      var path = this.props.url ? this.props.url : this.props.plural;
+      this.serverRequest = $.getJSON(path, (function (result) {
         this.setState({ values: result });
       }).bind(this));
     }
@@ -34380,7 +34485,7 @@ var SimpleSelect = (function (_React$Component) {
       return React.createElement(
         'select',
         { className: 'form-control',
-          name: '{this.props.singular}_id',
+          name: this.state.formName,
           value: this.props.current_value,
           onChange: this.handleChange },
         React.createElement(
@@ -34400,6 +34505,72 @@ var SimpleSelect = (function (_React$Component) {
   }]);
 
   return SimpleSelect;
+})(React.Component);
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SimpleTextInput = (function (_React$Component) {
+  _inherits(SimpleTextInput, _React$Component);
+
+  function SimpleTextInput(props) {
+    _classCallCheck(this, SimpleTextInput);
+
+    _get(Object.getPrototypeOf(SimpleTextInput.prototype), 'constructor', this).call(this, props);
+    this.state = {
+      name: this.props.name,
+      placeholder: this.props.placeholder,
+      value: this.props.value,
+      parentCallback: this.props.parentCallback
+    };
+  }
+
+  _createClass(SimpleTextInput, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      var name = e.target.name;
+      this.setState({ name: e.target.value });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return React.createElement('input', { type: 'text', className: 'form-control', placeholder: this.state.placeholder, name: this.state.name, value: this.state.value, onChange: this.handleChange });
+    }
+  }]);
+
+  return SimpleTextInput;
+})(React.Component);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SourceSelector = (function (_React$Component) {
+  _inherits(SourceSelector, _React$Component);
+
+  function SourceSelector() {
+    _classCallCheck(this, SourceSelector);
+
+    _get(Object.getPrototypeOf(SourceSelector.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(SourceSelector, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(SimpleSelect, _extends({}, this.props, { singular: 'source', plural: 'sources' }));
+    }
+  }]);
+
+  return SourceSelector;
 })(React.Component);
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -34462,7 +34633,7 @@ var StateColumns = (function (_React$Component) {
       return React.createElement(
         'div',
         { className: 'states' },
-        this.props.data.map(function (state) {
+        this.props.states.map(function (state) {
           return React.createElement(StateColumn, { key: state.id, state: state });
         })
       );
@@ -34470,6 +34641,62 @@ var StateColumns = (function (_React$Component) {
   }]);
 
   return StateColumns;
+})(React.Component);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var StateSelector = (function (_React$Component) {
+  _inherits(StateSelector, _React$Component);
+
+  function StateSelector() {
+    _classCallCheck(this, StateSelector);
+
+    _get(Object.getPrototypeOf(StateSelector.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(StateSelector, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(SimpleSelect, _extends({}, this.props, { singular: 'state', plural: 'states' }));
+    }
+  }]);
+
+  return StateSelector;
+})(React.Component);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var UnitSelector = (function (_React$Component) {
+  _inherits(UnitSelector, _React$Component);
+
+  function UnitSelector() {
+    _classCallCheck(this, UnitSelector);
+
+    _get(Object.getPrototypeOf(UnitSelector.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(UnitSelector, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(SimpleSelect, _extends({}, this.props, { singular: 'unit', plural: 'units' }));
+    }
+  }]);
+
+  return UnitSelector;
 })(React.Component);
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -34511,73 +34738,205 @@ var dateFormat = function dateFormat(date) {
 var capitalizeFirstLetter = function capitalizeFirstLetter(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 };
-(function() {
-  this.Batches = React.createClass({
-    getInitialState: function() {
-      return {
-        batches: this.props.data,
-        units: this.props.units
-      };
-    },
-    getDefaultProps: function() {
-      return {
-        batches: [],
-        units: []
-      };
-    },
-    addBatch: function(batch) {
-      var batches;
-      batches = React.addons.update(this.state.batches, {
-        $push: [batch]
-      });
-      return this.setState({
-        batches: batches
-      });
-    },
-    deleteBatch: function(batch) {
-      var batches, index;
-      index = this.state.batches.indexOf(batch);
-      batches = React.addons.update(this.state.batches, {
-        $splice: [[index, 1]]
-      });
-      return this.replaceState({
-        batches: batches
-      });
-    },
-    render: function() {
-      var batch;
-      return React.DOM.div({
-        className: 'batches'
-      }, React.DOM.hr(null), React.DOM.table({
-        className: 'table table-bordered table-striped'
-      }, React.DOM.thead(null, React.DOM.tr(null, React.DOM.th(null, 'Date'), React.DOM.th(null, 'Name'), React.DOM.th(null, 'Code'), React.DOM.th(null, 'Volume'), React.DOM.th(null, 'Units'), React.DOM.th(null, 'Actions'))), React.DOM.tbody(null, (function() {
-        var i, len, ref, results;
-        ref = this.state.batches;
-        results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          batch = ref[i];
-          results.push(React.createElement(Batch, {
-            key: batch.id,
-            batch: batch,
-            handleDeleteBatch: this.deleteBatch
-          }));
-        }
-        return results;
-      }).call(this))), React.createElement(BatchLineForm, {
-        handleNewBatch: this.addBatch,
-        units: this.state.units
-      }));
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var VesselSelector = (function (_React$Component) {
+  _inherits(VesselSelector, _React$Component);
+
+  function VesselSelector() {
+    _classCallCheck(this, VesselSelector);
+
+    _get(Object.getPrototypeOf(VesselSelector.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(VesselSelector, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(SimpleSelect, _extends({}, this.props, { singular: 'vessel', plural: 'vessels' }));
     }
-  });
+  }]);
 
-}).call(this);
-(function() {
-  jQuery(function() {
-    $("a[rel~=popover], .has-popover").popover();
-    return $("a[rel~=tooltip], .has-tooltip").tooltip();
-  });
+  return VesselSelector;
+})(React.Component);
 
-}).call(this);
+$("a[rel~=popover], .has-popover").popover();
+$("a[rel~=tooltip], .has-tooltip").tooltip();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Batches = (function (_React$Component) {
+  _inherits(Batches, _React$Component);
+
+  function Batches(props) {
+    _classCallCheck(this, Batches);
+
+    _get(Object.getPrototypeOf(Batches.prototype), 'constructor', this).call(this, props);
+    this.state = {
+      batches: this.props.batches
+    };
+    this.addBatch = this.addBatch.bind(this);
+    this.deleteBatch = this.deleteBatch.bind(this);
+  }
+
+  _createClass(Batches, [{
+    key: 'addBatch',
+    value: function addBatch(batch) {
+      var batches = this.state.batches.slice();
+      batches.push(batch);
+      this.setState({ batches: batches });
+    }
+  }, {
+    key: 'deleteBatch',
+    value: function deleteBatch(batch) {
+      var batches = this.state.batches.slice();
+      var index = this.state.batches.indexOf(batch);
+      batches.splice(index, 1);
+      this.setState({ batches: batches });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var rows = [];
+      this.state.batches.map(function (batch) {
+        rows.push(React.createElement(Batch, { key: batch.id, handleDeleteBatch: this.deleteBatch, batch: batch }));
+      }, this);
+      return React.createElement(
+        'div',
+        { className: 'batches' },
+        React.createElement(BatchLineForm, { handleNewBatch: this.addBatch }),
+        React.createElement('hr', null),
+        React.createElement(
+          'table',
+          { className: 'table table-bordered table-striped' },
+          React.createElement(
+            'thead',
+            null,
+            React.createElement(
+              'tr',
+              null,
+              React.createElement(
+                'td',
+                null,
+                'Date'
+              ),
+              React.createElement(
+                'td',
+                null,
+                'Name'
+              ),
+              React.createElement(
+                'td',
+                null,
+                'Code'
+              ),
+              React.createElement(
+                'td',
+                null,
+                'Volume'
+              ),
+              React.createElement(
+                'td',
+                null,
+                'Units'
+              ),
+              React.createElement(
+                'td',
+                null,
+                'Actions'
+              )
+            )
+          ),
+          React.createElement(
+            'tbody',
+            null,
+            rows
+          )
+        )
+      );
+    }
+  }]);
+
+  return Batches;
+})(React.Component);
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Snapshot = (function (_React$Component) {
+  _inherits(Snapshot, _React$Component);
+
+  function Snapshot(props) {
+    _classCallCheck(this, Snapshot);
+
+    _get(Object.getPrototypeOf(Snapshot.prototype), "constructor", this).call(this, props);
+    this.state = {
+      states: []
+    };
+  }
+
+  _createClass(Snapshot, [{
+    key: "getStates",
+    value: function getStates() {
+      $.getJSON('/states/front_page', (function (result) {
+        this.setState({ states: result });
+      }).bind(this));
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.getStates();
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.getStates().abort();
+    }
+  }, {
+    key: "addBatch",
+    value: function addBatch(batch) {
+      this.getStates();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement(
+        "div",
+        { className: "snapshot" },
+        React.createElement(
+          "div",
+          { className: "page-header" },
+          React.createElement(
+            "h1",
+            null,
+            "Production Snapshot"
+          )
+        ),
+        React.createElement(BatchLineForm, { handleNewBatch: this.addBatch }),
+        React.createElement("hr", null),
+        React.createElement(StateColumns, { states: this.state.states })
+      );
+    }
+  }]);
+
+  return Snapshot;
+})(React.Component);
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //

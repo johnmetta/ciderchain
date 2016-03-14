@@ -12,7 +12,7 @@ class Vessel < ActiveRecord::Base
     %i{flex_tank barrel steel tote}
   end
   def self.free
-    joins(:rackings).where(rackings: { closed: nil })
+    joins("left outer JOIN 'rackings' ON 'rackings'.'vessel_id' = 'vessels'.'id'").where(rackings: { closed: nil })
   end
 
   def type_name

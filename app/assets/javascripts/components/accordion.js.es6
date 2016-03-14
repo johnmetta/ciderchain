@@ -2,7 +2,7 @@ class Accordion extends React.Component {
   constructor() {
     super();
     this.state = {
-      shown: false
+      shown: true
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -10,13 +10,16 @@ class Accordion extends React.Component {
     this.setState({shown: !this.state.shown});
   }
   render() {
-    let style = {
-      shown: { display: 'inherit' },
-      hidden: { display: 'none' }
+    let bodyStyle = {
+      shown: { display: 'inherit', padding: '5px' },
+      hidden: { display: 'none', padding: '5px' },
     }
-    let stateStyle = this.state.shown ? style.shown : style.hidden;
+    let panelStyle = {
+      marginBottom: '1px'
+    }
+    let stateStyle = this.state.shown ? bodyStyle.shown : bodyStyle.hidden;
     return (
-      <section className='panel panel-info'>
+      <section className='panel panel-info' style={panelStyle}>
         <div className='accordion-header panel-heading' onClick={this.toggle} >
           {this.props.children[0]}
         </div>

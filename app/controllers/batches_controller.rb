@@ -70,7 +70,7 @@ class BatchesController < ApplicationController
 
   def latest_code
     respond_to do |format|
-      format.json {render json: { code: Batch.default_code } }
+      format.json {render json: { code: Batch.new_code } }
     end
   end
 

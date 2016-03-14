@@ -6,26 +6,61 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var BatchCard = (function (_React$Component) {
-  _inherits(BatchCard, _React$Component);
+var Snapshot = (function (_React$Component) {
+  _inherits(Snapshot, _React$Component);
 
-  function BatchCard() {
-    _classCallCheck(this, BatchCard);
+  function Snapshot(props) {
+    _classCallCheck(this, Snapshot);
 
-    _get(Object.getPrototypeOf(BatchCard.prototype), "constructor", this).apply(this, arguments);
+    _get(Object.getPrototypeOf(Snapshot.prototype), "constructor", this).call(this, props);
+    this.state = {
+      states: []
+    };
   }
 
-  _createClass(BatchCard, [{
+  _createClass(Snapshot, [{
+    key: "getStates",
+    value: function getStates() {
+      $.getJSON('/states/front_page', (function (result) {
+        this.setState({ states: result });
+      }).bind(this));
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.getStates();
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.getStates().abort();
+    }
+  }, {
+    key: "addBatch",
+    value: function addBatch(batch) {
+      this.getStates();
+    }
+  }, {
     key: "render",
     value: function render() {
       return React.createElement(
-        Accordion,
-        null,
-        React.createElement(BatchCardHeader, { batch: this.props.batch }),
-        React.createElement(BatchCardDetails, { batch: this.props.batch })
+        "div",
+        { className: "snapshot" },
+        React.createElement(
+          "div",
+          { className: "page-header" },
+          React.createElement(
+            "h1",
+            null,
+            "Production Snapshot"
+          )
+        ),
+        React.createElement(BatchLineForm, { handleNewBatch: this.addBatch }),
+        React.createElement("hr", null),
+        React.createElement(StateColumns, { states: this.state.states })
       );
     }
   }]);
 
-  return BatchCard;
+  return Snapshot;
 })(React.Component);
