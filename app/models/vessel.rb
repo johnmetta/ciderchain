@@ -11,6 +11,9 @@ class Vessel < ActiveRecord::Base
   def self.types
     %i{flex_tank barrel steel tote}
   end
+  def self.free
+    joins(:rackings).where(rackings: { closed: nil })
+  end
 
   def type_name
     vessel_type.name
@@ -18,5 +21,9 @@ class Vessel < ActiveRecord::Base
 
   def current_racking
     rackings.last
+  end
+
+  def open?
+    !!rackings.open.none?
   end
 end

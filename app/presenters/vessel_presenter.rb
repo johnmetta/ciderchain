@@ -5,7 +5,10 @@ class VesselPresenter < SimpleDelegator
     {
       id: id,
       type_name: type_name.humanize,
-      code: code
+      code: code,
+      name: code,
+      volume: volume,
+      unit_id: unit_id
     }
   end
 end

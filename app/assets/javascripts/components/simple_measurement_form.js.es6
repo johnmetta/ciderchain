@@ -7,18 +7,21 @@ class SimpleMeasurementForm extends React.Component {
       racking_id: this.props.racking_id
     };
   }
+  handleChange(e) {
+
+  }
 
   render() {
     return (
       <section>
-        <SimpleSelect singular='property' plural='properties' />
-        <SimpleSelect singular='source' plural='sources' />
+        <PropertySelector callbackParent={this.handleChange} />
+        <SourceSelector callbackParent={this.handleChange} />
         <input className='form-control'
                type='text'
                name='value'
                placeholder='Value'
                value={this.state.value} />
-        <SimpleSelect singular='unit' plural='units' />
+        <UnitSelector callbackParent={this.handleChange} />
         <button className='btn btn-primary'
                 type='submit' >
           Save

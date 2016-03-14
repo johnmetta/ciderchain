@@ -25,7 +25,7 @@ class Batches extends React.Component {
     }, this);
     return (
       <div className='batches'>
-        <BatchLineForm units={this.props.units} handleNewBatch={this.addBatch} />
+        <BatchLineForm handleNewBatch={this.addBatch} />
         <hr/>
         <table className='table table-bordered table-striped'>
           <thead>

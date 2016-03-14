@@ -1,13 +1,9 @@
 class StatesController < ApplicationController
-  skip_before_action :require_login, only: [:index]
   before_action :set_state, only: [:show, :edit, :update, :destroy]
 
   # GET /states
   # GET /states.json
   def index
-    unless current_user
-      redirect_to login_url and return
-    end
     @states = State.all
     respond_to do |format|
       format.html { @states }
@@ -15,6 +11,13 @@ class StatesController < ApplicationController
     end
   end
 
+  def front_page
+    @states = State.front_page
+    respond_to do |format|
+      format.html { @states }
+      format.json { render json: StatePresenter.collection(@states).as_json }
+    end
+  end
   # GET /states/1
   # GET /states/1.json
   def show

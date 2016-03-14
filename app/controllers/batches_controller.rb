@@ -24,8 +24,15 @@ class BatchesController < ApplicationController
   # POST /batches
   # POST /batches.json
   def create
-    @batch = Batch.new(batch_params)
-    @batch.unit = Unit.liter unless batch_params[:unit_id]
+    @batch = Batch.new(batch_params.except(:state_id, :vessel_id))
+    if batch_params[:state_id] && batch_params[:vessel_id]
+      @batch.rackings.build(
+        state_id: batch_params[:state_id],
+        unit_id: batch_params[:unit_id],
+        vessel_id: batch_params[:vessel_id],
+        volume: batch_params[:volume]
+      )
+    end
     respond_to do |format|
       if @batch.save
         format.html { redirect_to @batch, notice: 'Batch was successfully created.' }
@@ -61,9 +68,9 @@ class BatchesController < ApplicationController
     end
   end
 
-  def default_batch_info
-    respond_to :json do
-      { code: Batch.default_code, date: Date.today }
+  def latest_code
+    respond_to do |format|
+      format.json {render json: { code: Batch.default_code } }
     end
   end
 
@@ -75,6 +82,6 @@ class BatchesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def batch_params
-      params.require(:batch).permit(:created_at, :name, :volume, :code, :unit_id)
+      params.require(:batch).permit(:created_at, :name, :volume, :code, :unit_id, :state_id, :vessel_id)
     end
 end

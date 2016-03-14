@@ -239,7 +239,6 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-sass (~> 3.3.6)
-  coffee-rails (~> 4.0.0)
   haml (~> 4.0.5)
   haml-rails
   jbuilder (~> 2.0)

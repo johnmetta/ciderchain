@@ -19,6 +19,7 @@ class Racking < ActiveRecord::Base
 
   scope :by_state, -> (state) { where(state_id: state.id) }
   scope :open, -> { where(closed: nil) }
+  scope :by_vessel, -> (vessel) { where(vessel_id: vessel.id) }
 
   def base_volume
     volume * unit.factor

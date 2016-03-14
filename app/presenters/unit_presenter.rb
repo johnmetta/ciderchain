@@ -4,7 +4,8 @@ class UnitPresenter < SimpleDelegator
   def as_json
     {
       id: id,
-      name: name
+      name: name,
+      short_name: short_name
     }
   end
 end

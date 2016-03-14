@@ -6,9 +6,15 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new', as: :login
   match 'logout' => 'sessions#destroy', as: :logout, via: :all
 
-  resources :batches
-  resources :states
-  resources :vessels
+  resources :batches do
+    get :latest_code, on: :collection
+  end
+  resources :states do
+    get :front_page, on: :collection
+  end
+  resources :vessels do
+    get :free, on: :collection
+  end
   resources :measurements
   resources :additions
   resources :units

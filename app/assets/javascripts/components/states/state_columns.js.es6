@@ -5,7 +5,7 @@ class StateColumns extends React.Component {
   render() {
     return (
       <div className='states'>
-        {this.props.data.map(function(state) {
+        {this.props.states.map(function(state) {
           return <StateColumn key={state.id} state={state}/>;
         })}
       </div>

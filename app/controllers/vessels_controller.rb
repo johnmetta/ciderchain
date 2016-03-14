@@ -5,11 +5,27 @@ class VesselsController < ApplicationController
   # GET /vessels.json
   def index
     @vessels = Vessel.all
+    respond_to do |format|
+      format.html
+      format.json { render json: VesselPresenter.collection(@vessels).as_json }
+    end
+  end
+
+  def free
+    @vessels = Vessel.all.select(&:open?)
+    respond_to do |format|
+      format.html
+      format.json { render json: VesselPresenter.collection(@vessels).as_json }
+    end
   end
 
   # GET /vessels/1
   # GET /vessels/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json { render json: VesselPresenter.new(@vessel).as_json }
+    end
   end
 
   # GET /vessels/new
@@ -29,7 +45,7 @@ class VesselsController < ApplicationController
     respond_to do |format|
       if @vessel.save
         format.html { redirect_to @vessel, notice: 'Vessel was successfully created.' }
-        format.json { render :show, racking: :created, location: @vessel }
+        format.json { render json: @vessel }
       else
         format.html { render :new }
         format.json { render json: @vessel.errors, racking: :unprocessable_entity }

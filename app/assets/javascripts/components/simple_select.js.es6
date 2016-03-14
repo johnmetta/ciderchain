@@ -11,7 +11,8 @@ class SimpleSelect extends React.Component {
     this.props.callbackParent(e);
   }
   componentDidMount() {
-    this.serverRequest = $.getJSON(this.props.plural, function (result) {
+    let path = this.props.url ? this.props.url : this.props.plural;
+    this.serverRequest = $.getJSON(path, function (result) {
       this.setState({values: result});
     }.bind(this));
   }
