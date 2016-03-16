@@ -2,7 +2,7 @@ class Accordion extends React.Component {
   constructor() {
     super();
     this.state = {
-      shown: true
+      shown: false
     };
     this.toggle = this.toggle.bind(this);
   }
