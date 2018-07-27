@@ -24,6 +24,7 @@ class RackingsController < ApplicationController
   # POST /rackings
   # POST /rackings.json
   def create
+    binding.pry
     @racking = Racking.new(racking_params)
 
     respond_to do |format|
@@ -69,6 +70,6 @@ class RackingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def racking_params
-      params.require(:racking).permit(:volume, :batch_id, :unit_id, :state_id, :vessel_id)
+      params.require(:racking).permit(:volume, :batch_id, :unit_id, :state_id, :vessel_id, :old_state_id, :dragged)
     end
 end

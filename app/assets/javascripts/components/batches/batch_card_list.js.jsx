@@ -9,21 +9,19 @@ class BatchCardDetails extends React.Component {
             <span className='glyphicon glyphicon-edit'></span>
           </button>
           <button type='button' className='btn btn-info btn-sm'>
-              <span className='glyphicon glyphicon-tint'></span>
+            <span className='glyphicon glyphicon-tint'></span>
           </button>
           <button type='button' className='btn btn-primary btn-sm'>
-              <span className='glyphicon glyphicon-share'></span>
-          </button>
-          <button type='button' className='btn btn-primary btn-sm'>
-              <span className='glyphicon glyphicon-send'></span>
+            <span className='glyphicon glyphicon-send'></span>
           </button>
         </div>
           <button type='button' className='btn btn-danger btn-sm pull-right'>
-              <span className='glyphicon glyphicon-remove'></span>
+            <span className='glyphicon glyphicon-remove'></span>
           </button>
         <ul className='list-unstyled well well-sm'>
           <ListItem data={this.props.batch.code} />
-          <ListItem data={dateFormat(this.props.batch.created_at)} />
+          <DatePicker
+              onChange={this.handleChange} />
           <ListItem data={this.props.batch.current_vessel.code} />
         </ul>
         <form className='form-inline' onSubmit={this.handleMeasurement}>

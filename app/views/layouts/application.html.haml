@@ -5,7 +5,8 @@
     = csrf_meta_tags
     =stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     =javascript_include_tag 'application', 'data-turbolinks-track' => true
-
+    =stylesheet_link_tag 'dragula', media: 'all', 'data-turbolinks-track' => true
+    =stylesheet_link_tag 'application', 'https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,100&subset=latin,latin-ext'
   %body
     =react_component 'NavBar', current_user: current_user ? UserPresenter.new(current_user).as_json : nil
 

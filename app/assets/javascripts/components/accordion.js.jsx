@@ -1,6 +1,6 @@
 class Accordion extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       shown: false
     };
@@ -13,13 +13,14 @@ class Accordion extends React.Component {
     let bodyStyle = {
       shown: { display: 'inherit', padding: '5px' },
       hidden: { display: 'none', padding: '5px' },
-    }
+    };
     let panelStyle = {
       marginBottom: '1px'
-    }
+    };
     let stateStyle = this.state.shown ? bodyStyle.shown : bodyStyle.hidden;
+    let thisId = 'batch-' + this.props.batch.id;
     return (
-      <section className='panel panel-info' style={panelStyle}>
+      <div id={thisId} className='panel panel-info' style={panelStyle}>
         <div className='accordion-header panel-heading' onClick={this.toggle} >
           {this.props.children[0]}
         </div>
@@ -28,7 +29,7 @@ class Accordion extends React.Component {
             {this.props.children[1]}
           </div>
         </div>
-      </section>
+      </div>
     )
   }
 
