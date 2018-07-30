@@ -1,28 +1,7 @@
-== README
+# Deprecated and Obsolete!
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+I'm moving this into two separate (and up to date) repositories:
+ - [CiderChain API](https://github.com/johnmetta/ciderchain_api): The Rails API backend
+ - [CiderChain Client](https://github.com/johnmetta/ciderchain_client): The React front end
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Note, both of those are still broken, as I'm doing a pretty ham-fisted code migration in order to build up from clean Rails and React projects.
