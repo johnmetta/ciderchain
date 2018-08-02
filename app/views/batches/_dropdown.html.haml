@@ -1,5 +1,0 @@
-.dropdown
-
-  -options = options_from_collection_for_select(Batch.all, 'id', 'code')
-  = f.select :batch_id,  options, {class: 'form-control', id: 'batch-select', required: required}
-  = f.error_span(:batch_id)

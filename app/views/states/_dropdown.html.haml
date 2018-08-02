@@ -1,5 +1,0 @@
-.dropdown
-
-  -options = options_from_collection_for_select(State.all, 'id', 'name')
-  = f.select :state_id,  options, {class: 'form-control', required: required}
-  = f.error_span(:state_id)

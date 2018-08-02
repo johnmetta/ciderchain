@@ -1,5 +1,0 @@
-.dropdown
-
-  -options = options_from_collection_for_select(@rackings, 'id', 'name', selected: selected)
-  = f.select :racking_id,  options, {class: 'form-control', required: required}
-  = f.error_span(:racking_id)

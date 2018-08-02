@@ -1,7 +1,0 @@
-# Deprecated and Obsolete!
-
-I'm moving this into two separate (and up to date) repositories:
- - [CiderChain API](https://github.com/johnmetta/ciderchain_api): The Rails API backend
- - [CiderChain Client](https://github.com/johnmetta/ciderchain_client): The React front end
-
-Note, both of those are still broken, as I'm doing a pretty ham-fisted code migration in order to build up from clean Rails and React projects.
