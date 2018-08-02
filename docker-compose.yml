@@ -9,13 +9,44 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  api:
-    build: .
-    command: rails s
+#  redis:
+#    image: redis
+#    volumes:
+#      - ./tmp/redis:/data
+#    ports:
+#      - 6379:6379
+#  worker:
+#    build: server
+#    command: bundle exec sidekiq
+#    environment:
+#      REDIS_URL: redis://redis:6379/0
+#    volumes:
+#      - ./backend:/usr/src/backend-app
+#    depends_on:
+#      - db
+#      - redis
+  server:
+    build: ./server/
+    command: rails s -p 8080 -b '0.0.0.0'
+    tty: true
+    stdin_open: true
     volumes:
-      - ./api:/server
+      - './server:/server'
     ports:
-      - "3000:3000"
+      - "8080:8080"
+    entrypoint: [bin/entry]
     depends_on:
       db:
         condition: service_healthy
+  client:
+    build: ./client/
+    volumes:
+      - './client:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      server:
+        condition: service_started

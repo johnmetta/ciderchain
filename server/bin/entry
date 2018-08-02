@@ -1,0 +1,16 @@
+#! /bin/bash
+if [ -f tmp/pids/server.pid ]; then
+  rm tmp/pids/server.pid
+fi
+
+rails db:migrate
+
+if [[ $? != 0 ]]; then
+  echo
+  echo "== Failed to migrate. Running setup first."
+  echo
+  rails db:setup
+fi
+
+# Execute the given or default command:
+exec "$@"
