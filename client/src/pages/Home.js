@@ -1,5 +1,5 @@
 import React from 'react'
-import {get, post} from '../clients/api'
+import {get, post} from '../modules/api'
 import withData from './withData'
 import StateColumns from '../components/States/StateColumns';
 import BatchLineForm from '../components/Batches/BatchLineForm';
@@ -7,13 +7,13 @@ import BatchLineForm from '../components/Batches/BatchLineForm';
 export default withData(
   class Home extends React.Component {
     static async getInitialProps() {
-      const response = await get('/states/front_page')
-      return {states: response.data}
+      const {data, response} = await get('/states/front_page')
+      return {states: data}
     }
 
     static async addBatch(batch) {
-      const response = await get('/states/front_page')
-      this.setState({states: response.data});
+      const {data, response} = await get('/states/front_page')
+      this.setState({states: data});
     }
 
     render() {
@@ -24,7 +24,7 @@ export default withData(
         </div>
         <BatchLineForm handleNewBatch={this.addBatch} />
         <hr />
-        <StateColumns states={this.state.states} />
+        <StateColumns states={this.props.states} />
       </div>
     )
     }

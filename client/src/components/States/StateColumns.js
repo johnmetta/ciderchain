@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import RackingModal from '../RackingModal';
 import StateColumn from './StateColumn';
-//var dragula = require('react-dragula');
+var dragula = require('react-dragula');
 
 export default class StateColumns extends Component {
   constructor(props) {
@@ -35,12 +35,12 @@ export default class StateColumns extends Component {
   }
 
   componentDidMount() {
-    /*var drake = dragula({
+    var drake = dragula({
       isContainer: function (el) {
         return el.classList.contains('dragula-container');
       }
     }).on('drop', this.onDrop);
-    */
+
   }
 
   render() {

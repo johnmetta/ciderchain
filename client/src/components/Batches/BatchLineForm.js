@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import UnitSelector from '../UnitSelector';
 import VesselSelector from '../VesselSelector';
 import StateSelector from '../States/StateSelector';
-//import post from '../../clients/api';
+import {get} from '../../modules/api';
 
 export default class BatchLineForm extends Component {
   constructor(props) {
@@ -51,18 +51,10 @@ export default class BatchLineForm extends Component {
       this.state.vessel_id &&
       this.state.state_id;
   }
-  componentDidMount() {
-    /*this.serverRequest = $.getJSON('/batches/latest_code', function (result) {
-      this.setState({
-        code: result.code
-      });
-    }.bind(this));
-    */
+  async getInitialProps() {
+    const {data, response} = await get('/batches/latest_code');
+    return {code: data};
   }
-  componentWillUnmount() {
-    this.serverRequest.abort();
-  }
-
   render() {
     return (
       <form className='form-inline' onSubmit={this.handleSubmit}>

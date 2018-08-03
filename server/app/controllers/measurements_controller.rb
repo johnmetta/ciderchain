@@ -1,5 +1,5 @@
 class MeasurementsController < ApplicationController
-  before_action :set_measurement, only: [:show, :edit, :update, :destroy]
+  before_action :set_measurement, only: %i[show edit update destroy]
 
   # GET /measurements
   # GET /measurements.json
@@ -9,8 +9,7 @@ class MeasurementsController < ApplicationController
 
   # GET /measurements/1
   # GET /measurements/1.json
-  def show
-  end
+  def show; end
 
   # GET /measurements/new
   def new
@@ -18,36 +17,26 @@ class MeasurementsController < ApplicationController
   end
 
   # GET /measurements/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /measurements
   # POST /measurements.json
   def create
     @measurement = Measurement.new(measurement_params)
-
-    respond_to do |format|
-      if @measurement.save
-	format.html { redirect_to @measurement, notice: 'Measurement was successfully created.' }
-	format.json { render :show, racking: :created, location: @measurement }
-      else
-	format.html { render :new }
-	format.json { render json: @measurement.errors, racking: :unprocessable_entity }
-      end
+    if @measurement.save
+      render :show, racking: :created, location: @measurement
+    else
+      render json: @measurement.errors, racking: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /measurements/1
   # PATCH/PUT /measurements/1.json
   def update
-    respond_to do |format|
-      if @measurement.update(measurement_params)
-	format.html { redirect_to @measurement, notice: 'Measurement was successfully updated.' }
-	format.json { render :show, racking: :ok, location: @measurement }
-      else
-	format.html { render :edit }
-	format.json { render json: @measurement.errors, racking: :unprocessable_entity }
-      end
+    if @measurement.update(measurement_params)
+      render :show, racking: :ok, location: @measurement
+    else
+      render json: @measurement.errors, racking: :unprocessable_entity
     end
   end
 
@@ -55,20 +44,18 @@ class MeasurementsController < ApplicationController
   # DELETE /measurements/1.json
   def destroy
     @measurement.destroy
-    respond_to do |format|
-      format.html { redirect_to measurements_url, notice: 'Measurement was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_measurement
-      @measurement = Measurement.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def measurement_params
-      params.require(:measurement).permit(:value, :racking_id, :property_id, :unit_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_measurement
+    @measurement = Measurement.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def measurement_params
+    params.require(:measurement).permit(:value, :racking_id, :property_id, :unit_id)
+  end
 end

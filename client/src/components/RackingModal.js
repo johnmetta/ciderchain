@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from './Modal';
-import {get, post} from '../clients/api'
+import {get, post} from '../modules/api'
 
 export default class RackingModal extends Component {
   onAccept() {

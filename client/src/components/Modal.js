@@ -15,14 +15,18 @@ export default class Modal extends Component {
   divShown() {
     if(this.props.isOpen){
       return (
-        <CSSTransitionGroup transitionName={this.props.transitionName}>
+        <CSSTransitionGroup transitionName={this.props.transitionName}
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={300}>
           <div className="modal">
             {this.props.children}
           </div>
         </CSSTransitionGroup>
       );
     } else {
-      return <CSSTransitionGroup transitionName={this.props.transitionName} />;
+      return <CSSTransitionGroup transitionName={this.props.transitionName}
+      transitionEnterTimeout={500}
+      transitionLeaveTimeout={300}/>;
     }
   }
   render() {

@@ -1,10 +1,9 @@
 class Racking < ActiveRecord::Base
-
   belongs_to :state
   belongs_to :unit
   belongs_to :vessel
   belongs_to :batch
-  belongs_to :closed_by, class_name: Racking.name, foreign_key: :closed_by_id
+  belongs_to :closed_by, class_name: Racking.name, foreign_key: :closed_by_id, optional: true
   has_many  :measurements
   has_many  :additions
 
@@ -17,9 +16,9 @@ class Racking < ActiveRecord::Base
   before_create :default_volume
   after_commit  :close_previous_racking
 
-  scope :by_state, -> (state) { where(state_id: state.id) }
+  scope :by_state, ->(state) { where(state_id: state.id) }
   scope :open, -> { where(closed: nil) }
-  scope :by_vessel, -> (vessel) { where(vessel_id: vessel.id) }
+  scope :by_vessel, ->(vessel) { where(vessel_id: vessel.id) }
 
   def base_volume
     volume * unit.factor
@@ -29,7 +28,7 @@ class Racking < ActiveRecord::Base
     raise ArgumentError unless racking.is_a?(Racking)
     self.closed = Date.today
     self.closed_by = racking
-    self.save
+    save
   end
 
   def display_name
@@ -44,15 +43,15 @@ class Racking < ActiveRecord::Base
   end
 
   def check_unique_racking
-    if batch.rackings.open.reject{|s| s.id == id}.any? && !closed
+    if batch.rackings.open.reject { |s| s.id == id }.any? && !closed
       errors.add(:closed, 'Cannot have more than one open racking per batch')
     end
   end
 
   def close_previous_racking
     return unless batch.present?
-    unless self.closed
-      batch.rackings.open.reject{|s| s.id == id}.map{|s| s.close! self }
+    unless closed
+      batch.rackings.open.reject { |s| s.id == id }.map { |s| s.close! self }
     end
   end
 
@@ -61,7 +60,7 @@ class Racking < ActiveRecord::Base
       self.closed = true
       self.packaged = true
     else
-      errors.add(:vessel, 'must be present') unless self.vessel_id
+      errors.add(:vessel, 'must be present') unless vessel_id
     end
   end
 end

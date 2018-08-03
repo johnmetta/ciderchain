@@ -1,24 +1,19 @@
 class AdditivesController < ApplicationController
-  before_action :set_additive, only: [:show, :edit, :update, :destroy]
+  before_action :set_additive, only: %i[show edit update destroy]
 
   def index
     @additives = Additive.all
-    respond_to do |format|
-      format.html
-      format.json { render json: AdditivePresenter.collection(@additives).as_json }
-    end
+    render json: AdditivePresenter.collection(@additives).as_json
   end
 
   # GET /units/1
   # GET /units/1.json
   def show
-    respond_to do |format|
-      format.html
-      format.json { render json: @additive }
-    end
+    render json: @additive
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_additive
     @additive = Additive.find(params[:id])
@@ -28,5 +23,4 @@ class AdditivesController < ApplicationController
   def additive_params
     params.require(:additive).permit(:name, :notes)
   end
-
 end

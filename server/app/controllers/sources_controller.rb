@@ -1,24 +1,19 @@
 class SourcesController < ApplicationController
-  before_action :set_source, only: [:show, :edit, :update, :destroy]
+  before_action :set_source, only: %i[show edit update destroy]
 
   def index
     @sources = Source.all
-    respond_to do |format|
-      format.html
-      format.json { render json: SourcePresenter.collection(@sources).as_json }
-    end
+    render json: SourcePresenter.collection(@sources).as_json
   end
 
   # GET /units/1
   # GET /units/1.json
   def show
-    respond_to do |format|
-      format.html
-      format.json { render json: @source }
-    end
+    render json: @source
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_source
     @source = Source.find(params[:id])
@@ -28,5 +23,4 @@ class SourcesController < ApplicationController
   def source_params
     params.require(:source).permit(:name, :notes)
   end
-
 end

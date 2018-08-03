@@ -4,7 +4,7 @@ import SimpleHeader from '../SimpleHeader';
 import SimpleMeasurementForm from '../SimpleMeasurementForm';
 import SimpleAdditionForm from '../SimpleAdditionForm';
 import ListItem from '../Lists/ListItem';
-import dateFormat from '../Utilities';
+import {dateFormat} from '../../modules/utilities';
 
 export default class BatchCardDetails extends Component {
   render() {

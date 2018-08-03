@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import capitalizeFirstLetter from './Utilities';
+import {capitalizeFirstLetter} from '../modules/utilities';
+import { get } from '../modules/api';
 
 export default class SimpleSelect extends Component {
   constructor(props) {
@@ -13,16 +14,11 @@ export default class SimpleSelect extends Component {
   handleChange(e) {
     this.props.callbackParent(e);
   }
-  componentDidMount() {
-    /*
+  async getInitialProps() {
     let path = this.props.url ? this.props.url : this.props.plural;
-    this.serverRequest = $.getJSON(path, function (result) {
-      this.setState({values: result});
-    }.bind(this));
-    */
-  }
-  componentWillUnmount() {
-    this.serverRequest.abort();
+    const {data, response} = await get("/" + path);
+    throw data;
+    return {values: data};
   }
   render() {
     return (

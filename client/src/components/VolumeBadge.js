@@ -8,7 +8,7 @@ export default class VolumeBadge extends Component {
     return (
       <Badge badgeContent={content}
         color="secondary">
-
+        {this.props.child}
       </Badge>
         //badgeStyle={{top: 12, right: 12}}
     );
